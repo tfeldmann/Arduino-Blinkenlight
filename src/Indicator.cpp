@@ -46,18 +46,36 @@ void Indicator::toggle()
 
 void Indicator::blink(Speed speed = Speed::FAST)
 {
-    // exit if this are the current settings
-    if (mode_ == Mode::BLINKING && speed_ == speed)
-        return;
-
-    mode_ = Mode::BLINKING;
     speed_ = speed;
-    lastToggle_ = millis();
-    set_(HIGH);
+
+    // only switch mode if we are not blinking already
+    if (mode_ != Mode::BLINKING)
+    {
+        mode_ = Mode::BLINKING;
+        lastToggle_ = millis();
+        set_(HIGH);
+    }
 }
 
-void Indicator::count(int num, bool repeat = true, Speed speed = Speed::FAST);
-void Indicator::count(int num1, int num2, bool repeat = true, Speed speed = Speed::FAST);
+void Indicator::count(int num, bool repeat = true, Speed speed = Speed::FAST)
+{
+    count(num, 0, repeat, speed);
+}
+
+void Indicator::count(int num1, int num2, bool repeat = true, Speed speed = Speed::FAST)
+{
+    speed_ = speed;
+    repeat_ = repeat;
+
+    if (mode_ != Mode::COUNTING || num1_ != num1 || num2_ != num2)
+    {
+        mode_ = Mode::COUNTING;
+        num1_ = num1;
+        num2_ = num2;
+        lastToggle_ = millis();
+        set_(HIGH);
+    }
+}
 
 void Indicator::update()
 {
@@ -75,12 +93,12 @@ void Indicator::update()
         if (state_ == HIGH && (time - lastToggle_ >= on_ms))
         {
             set_(LOW);
-            lastToggle_ = millis();
+            lastToggle_ = time;
         }
         else if (state_ == LOW && (time - lastToggle_ >= off_ms))
         {
             set_(HIGH);
-            lastToggle_ = millis();
+            lastToggle_ = time;
         }
     }
 
