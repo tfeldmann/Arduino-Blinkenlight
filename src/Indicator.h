@@ -1,114 +1,77 @@
 #pragma once
-#include <Arduino.h>
 
-// TODO: support pwm
-
-class BaseLED
+class Indicator
 {
 public:
-    BaseLED()
+    enum Speed
     {
-        this->_blinkPeriod = 0;
-        this->_state = false;
-        this->_stateIsKnown = false;
-    }
+        SLOW,
+        FAST,
+    };
 
-    virtual void on()
-    {
-        this->set(HIGH);
-    }
+    // settings
+    int fast_on_ms;
+    int fast_off_ms;
+    int fast_pause_ms;
+    int fast_ending_ms;
+    int slow_on_ms;
+    int slow_off_ms;
+    int slow_pause_ms;
+    int slow_ending_ms;
 
-    virtual void off()
-    {
-        this->set(LOW);
-    }
+    // realtime state of the indicator
 
-    virtual void toggle()
-    {
-        this->set(!this->_state);
-    }
+    Indicator();
+    void configure(
+        int fast_on_ms,
+        int fast_off_ms,
+        int fast_pause_ms,
+        int fast_ending_ms,
+        int slow_on_ms,
+        int slow_off_ms,
+        int slow_pause_ms,
+        int slow_ending_ms);
 
-    virtual void set(bool state)
-    {
-        if (!this->_stateIsKnown || (state != this->_state))
-        {
-            this->_set(state);
-        }
-        this->_state = state;
-        this->_stateIsKnown = true;
-        this->_blinkPeriod = 0; // disable blinking
-    }
+    bool isOn();
 
-    virtual void blinkSlow()
-    {
-        this->blink(800);
-    }
+    void toggle();
+    void permanent(bool enable);
+    void blink(Speed speed = Speed::FAST);
+    void count(int num, bool repeat = true, Speed speed = Speed::FAST);
+    void count(int num1, int num2, bool repeat = true, Speed speed = Speed::FAST);
 
-    virtual void blinkFast()
-    {
-        this->blink(200);
-    }
+    void update();
 
-    virtual void blink(uint16_t period)
-    {
-        this->on();
-        this->_lastToggle = millis();
-        this->_blinkPeriod = period;
-    }
-
-    virtual void update()
-    {
-        if (!this->_blinkPeriod)
-            return;
-
-        unsigned long timestamp = millis();
-        if (timestamp - this->_lastToggle > this->_blinkPeriod)
-        {
-            this->_lastToggle = timestamp;
-            // toggle led without deactivating blinking
-            this->_set(!this->_state);
-            this->_state = !this->_state;
-        }
-    }
-
-    virtual bool isOn()
-    {
-        return this->_state;
-    }
-
-    virtual bool isBlinking()
-    {
-        return this->_blinkPeriod != 0;
-    }
-
-    virtual void _set(bool state)
-    {
-        (void)state; // prevent compiler warning
-    }
+    virtual void write(bool enable);
 
 private:
-    bool _state;
-    bool _stateIsKnown;
-    uint16_t _blinkPeriod;
-    unsigned long _lastToggle;
+    bool state_;
+    Speed speed_;
+    enum Mode
+    {
+        OFF,
+        ON,
+        BLINKING,
+        COUNTING,
+    } mode_;
+    int counter_;
+    bool repeat_;
+
+    // used for remembering counting settings
+    int num1_;
+    int num2_;
+
+    unsigned long long lastToggle_;
+    void set_(bool en);
 };
 
-class PinLED : public BaseLED
+class PinIndicator : public Indicator
 {
 public:
-    PinLED(int pin)
-        : BaseLED()
-    {
-        this->_pin = pin;
-        pinMode(this->_pin, OUTPUT);
-        this->_set(LOW);
-    }
-
-    void _set(bool state)
-    {
-        digitalWrite(this->_pin, state);
-    }
+    PinIndicator(int pin, bool invert = false);
+    void write(bool enable);
 
 private:
-    int _pin;
+    int pin_;
+    bool invert_;
 };
