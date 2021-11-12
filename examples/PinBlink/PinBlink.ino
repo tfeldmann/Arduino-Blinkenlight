@@ -1,6 +1,6 @@
-#include <PinIndicator.h>
+#include <IndicatorPin.h>
 
-PinIndicator led(13);
+IndicatorPin led(13);
 
 void setup()
 {

@@ -25,35 +25,31 @@ static const uint8_t LED_LOG_CURVE[256] = {
 };
 // clang-format on
 
-class FadePinIndicator : public Indicator
+class FadingIndicator : public Indicator
 {
 public:
-    FadePinIndicator(int pin, bool logarithmic = false, int fade_speed = 10)
+    FadingIndicator(bool logarithmic = false, int fade_speed = 10)
     {
         Indicator();
         configure(500, 500, 1000, 2000, 1000, 1000, 2000, 4000);
-        pin_ = pin;
-        value_ = 0;
         logarithmic_ = logarithmic;
         fade_speed_ = abs(fade_speed);
         lastUpdate_ = millis();
-        pinMode(pin_, OUTPUT);
+        value_ = 0;
     }
 
-    bool update()
+    int update()
     {
-        bool state = Indicator::update();
+        int state = Indicator::update();
         if (millis() - lastUpdate_ > 10)
         {
             int diff = state * 255 - value_;
             value_ += constrain(diff, -fade_speed_, fade_speed_);
             if (logarithmic_)
-                analogWrite(pin_, LED_LOG_CURVE[value_]);
-            else
-                analogWrite(pin_, value_);
+                value_ = LED_LOG_CURVE[value_];
             lastUpdate_ = millis();
         }
-        return state;
+        return value_;
     }
 
 private:

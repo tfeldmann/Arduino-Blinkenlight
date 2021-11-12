@@ -79,7 +79,7 @@ void Indicator::count(int num1, int num2, bool repeat, Speed speed)
     }
 }
 
-bool Indicator::update()
+int Indicator::update()
 {
     if (mode_ == Mode::ON || mode_ == Mode::OFF)
         return state_;

@@ -1,10 +1,10 @@
-#include <FadePinIndicator.h>
+#include <FadingIndicatorPin.h>
 
-FadePinIndicator led(13, true, 10);
+FadingIndicatorPin led(13, true, 10);
 
 void setup()
 {
-    led.blink();
+    led.count(2, 3);
 }
 
 void loop()

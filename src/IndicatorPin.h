@@ -3,20 +3,26 @@
 
 #include "Indicator.h"
 
-class PinIndicator : public Indicator
+class IndicatorPin : public Indicator
 {
 public:
-    PinIndicator(int pin, bool invert = false)
+    IndicatorPin(int pin, bool invert = false)
     {
         Indicator();
         pin_ = pin;
         invert_ = invert;
         pinMode(pin_, OUTPUT);
+        write(LOW);
     }
 
-    bool update()
+    int update()
     {
-        bool state = Indicator::update();
+        int state = Indicator::update();
+        write(state);
+    }
+
+    void write(bool state)
+    {
         digitalWrite(pin_, state ^ invert_);
     }
 
