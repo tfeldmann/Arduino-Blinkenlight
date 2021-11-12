@@ -25,10 +25,9 @@ jobs:
         example:
           [
             "examples/Blink",
-            "examples/Count",
-            "examples/Count2",
-            "examples/FadePinBlink",
-            "examples/PinBlink",
+            "examples/GenericBlink",
+            "examples/Pattern",
+            "examples/Pattern2",
           ]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
