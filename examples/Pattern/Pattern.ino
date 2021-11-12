@@ -4,7 +4,8 @@ IndicatorPin led(13);
 
 void setup()
 {
-    led.blink();
+    // blink three times, then pause and repeat.
+    led.pattern(3);
 }
 
 void loop()

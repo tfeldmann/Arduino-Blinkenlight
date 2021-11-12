@@ -2,19 +2,16 @@
 
 ## 🚨 Supercharge your status-LEDs 🚨
 
-> [The LED] should first blink two times, then pause for a moment and then blink three times.
-
-> The device beeps three times in a row to indicate an error. A single beep means it is turned on.
-
-Ever had one of these? Then this library is for you.
+> Super easy single-LED blinking patterns - now with ultra smooth fading (optional)
 
 ## Features
 
 - Basics: On / off / toggle
-- Supports counted (!) and infinite blinking
+- Supports blink patterns in the style of "Blink x times, pause, blink y times, repeat"
+- Supports infinite blinking
 - Super-nice fading effects (optional)
 - Super lightweight
-- Sane defaults (I tried)
+- Sane defaults (at least I tried)
 - Easily extendable
 - Non-blocking (no `delay()`)
 

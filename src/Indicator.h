@@ -37,8 +37,8 @@ public:
     void toggle();
     void permanent(bool enable);
     void blink(Speed speed = Speed::FAST);
-    void count(int num, bool repeat = true, Speed speed = Speed::FAST);
-    void count(int num1, int num2, bool repeat = true, Speed speed = Speed::FAST);
+    void pattern(int num, bool repeat = true, Speed speed = Speed::FAST);
+    void pattern(int num1, int num2, bool repeat = true, Speed speed = Speed::FAST);
 
     virtual int update();
 

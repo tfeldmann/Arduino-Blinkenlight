@@ -57,12 +57,12 @@ void Indicator::blink(Speed speed)
     }
 }
 
-void Indicator::count(int num, bool repeat, Speed speed)
+void Indicator::pattern(int num, bool repeat, Speed speed)
 {
-    count(num, 0, repeat, speed);
+    pattern(num, 0, repeat, speed);
 }
 
-void Indicator::count(int num1, int num2, bool repeat, Speed speed)
+void Indicator::pattern(int num1, int num2, bool repeat, Speed speed)
 {
     speed_ = speed;
     repeat_ = repeat;

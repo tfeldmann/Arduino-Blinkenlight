@@ -20,15 +20,6 @@
     "dependencies": [],
     "frameworks": "arduino",
     "platforms": "*",
-    "examples": [
-        {
-            "name": "Simple blink",
-            "base": "examples/Blink",
-            "files": [
-                "Blink.ino"
-            ]
-        }
-    ],
     "export": {
         "exclude": [
             "*.sh"
