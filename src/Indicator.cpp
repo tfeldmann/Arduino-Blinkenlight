@@ -16,7 +16,7 @@ void Indicator::configure(
     int slow_on_ms,
     int slow_off_ms,
     int slow_pause_ms,
-    int slow_ending_ms);
+    int slow_ending_ms)
 {
     this->fast_on_ms = fast_on_ms;
     this->fast_off_ms = fast_off_ms;
@@ -25,7 +25,7 @@ void Indicator::configure(
     this->slow_on_ms = slow_on_ms;
     this->slow_off_ms = slow_off_ms;
     this->slow_pause_ms = slow_pause_ms;
-    this->slow_ending_m = slow_ending_ms;
+    this->slow_ending_ms = slow_ending_ms;
 }
 
 bool Indicator::isOn()
@@ -44,7 +44,7 @@ void Indicator::toggle()
     permanent(!isOn());
 }
 
-void Indicator::blink(Speed speed = Speed::FAST)
+void Indicator::blink(Speed speed)
 {
     speed_ = speed;
 
@@ -57,12 +57,12 @@ void Indicator::blink(Speed speed = Speed::FAST)
     }
 }
 
-void Indicator::count(int num, bool repeat = true, Speed speed = Speed::FAST)
+void Indicator::count(int num, bool repeat, Speed speed)
 {
     count(num, 0, repeat, speed);
 }
 
-void Indicator::count(int num1, int num2, bool repeat = true, Speed speed = Speed::FAST)
+void Indicator::count(int num1, int num2, bool repeat, Speed speed)
 {
     speed_ = speed;
     repeat_ = repeat;
@@ -77,10 +77,10 @@ void Indicator::count(int num1, int num2, bool repeat = true, Speed speed = Spee
     }
 }
 
-void Indicator::update()
+bool Indicator::update()
 {
     if (mode_ == Mode::ON || mode_ == Mode::OFF)
-        return;
+        return state_;
 
     int on_ms = speed_ == Speed::FAST ? fast_on_ms : slow_on_ms;
     int off_ms = speed_ == Speed::FAST ? fast_off_ms : slow_off_ms;
@@ -90,12 +90,12 @@ void Indicator::update()
 
     if (mode_ == Mode::BLINKING)
     {
-        if (state_ == HIGH && (time - lastToggle_ >= on_ms))
+        if (state_ == HIGH && ((time - lastToggle_) >= on_ms))
         {
             set_(LOW);
             lastToggle_ = time;
         }
-        else if (state_ == LOW && (time - lastToggle_ >= off_ms))
+        else if (state_ == LOW && ((time - lastToggle_) >= off_ms))
         {
             set_(HIGH);
             lastToggle_ = time;
@@ -105,13 +105,11 @@ void Indicator::update()
     else if (mode_ == Mode::COUNTING)
     {
     }
+
+    return state_;
 }
 
-void Inditcator::set_(bool en)
+void Indicator::set_(bool en)
 {
     state_ = en;
-    write(en);
 }
-
-PinIndicator(int pin, bool invert = false);
-PinIndicator::apply(bool enable);

@@ -37,12 +37,11 @@ public:
     void toggle();
     void permanent(bool enable);
     void blink(Speed speed = Speed::FAST);
+    void flash();
     void count(int num, bool repeat = true, Speed speed = Speed::FAST);
     void count(int num1, int num2, bool repeat = true, Speed speed = Speed::FAST);
 
-    void update();
-
-    virtual void write(bool enable);
+    virtual bool update();
 
 private:
     bool state_;
@@ -65,13 +64,3 @@ private:
     void set_(bool en);
 };
 
-class PinIndicator : public Indicator
-{
-public:
-    PinIndicator(int pin, bool invert = false);
-    void write(bool enable);
-
-private:
-    int pin_;
-    bool invert_;
-};
