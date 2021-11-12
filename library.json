@@ -1,0 +1,32 @@
+{
+    "name": "Indicator",
+    "version": "1.0.1",
+    "description": "Supercharge your status-LEDs with fading, blink counts and more.",
+    "keywords": "led, signal, fading, blink",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tfeldmann/Arduino-Indicator.git"
+    },
+    "authors": [
+        {
+            "name": "Thomas Feldmann",
+            "email": "mail@tfeldmann.de",
+            "url": "https://tfeldmann.de",
+            "maintainer": true
+        }
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/tfeldmann/Arduino-Indicator",
+    "dependencies": [],
+    "frameworks": "arduino",
+    "platforms": "*",
+    "examples": [
+        {
+            "name": "Simple blink",
+            "base": "examples/Blink",
+            "files": [
+                "Blink.ino"
+            ]
+        }
+    ]
+}
