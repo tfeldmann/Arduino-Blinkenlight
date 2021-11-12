@@ -1,6 +1,6 @@
 #include <FadePinIndicator.h>
 
-FadePinIndicator led(13);
+FadePinIndicator led(13, true, 10);
 
 void setup()
 {
