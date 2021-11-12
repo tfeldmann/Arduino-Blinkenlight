@@ -1,6 +1,6 @@
 #include <Indicator.h>
 
-led = PinIndicator(13);
+PinIndicator led(13);
 
 void setup()
 {

@@ -35,7 +35,7 @@ bool Indicator::isOn()
 
 void Indicator::permanent(bool enable)
 {
-    state = enable ? State::ON : State::OFF;
+    mode_ = enable ? Mode::ON : Mode::OFF;
     set_(enable);
 }
 
