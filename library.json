@@ -1,7 +1,7 @@
 {
     "name": "Indicator",
-    "version": "1.0.1",
-    "description": "Supercharge your status-LEDs with fading, blink counts and more.",
+    "version": "1.1.0",
+    "description": "Super easy single-LED blinking patterns - now with ultra smooth fading (optional)",
     "keywords": "led, signal, fading, blink",
     "repository": {
         "type": "git",
