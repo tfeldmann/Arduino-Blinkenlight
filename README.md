@@ -6,8 +6,9 @@
 
 > The device beeps three times in a row to indicate an error. A single beep means it is turned on.
 
-Ever had one of these? Then this library is for you. You'll want to use this for every single
-LED you will ever control.
+Ever had one of these? Then this library is for you.
+
+## Features
 
 - Basics: On / off / toggle
 - Supports counted (!) and infinite blinking
