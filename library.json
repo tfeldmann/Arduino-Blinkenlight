@@ -28,5 +28,10 @@
                 "Blink.ino"
             ]
         }
-    ]
+    ],
+    "export": {
+        "exclude": [
+            "*.sh"
+        ]
+    }
 }
