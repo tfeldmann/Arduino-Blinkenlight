@@ -53,7 +53,8 @@ private:
         BLINKING,
         COUNTING,
     } mode_;
-    int counter_;
+    int counter1_;
+    int counter2_;
     bool repeat_;
 
     // used for remembering counting settings
@@ -63,4 +64,3 @@ private:
     unsigned long long lastToggle_;
     void set_(bool en);
 };
-

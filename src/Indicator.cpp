@@ -4,7 +4,7 @@
 Indicator::Indicator()
 {
     // some sane defaults for LED lights
-    configure(400, 400, 800, 1600, 800, 800, 1600, 3200);
+    configure(200, 200, 400, 800, 800, 800, 1600, 3200);
     permanent(false);
 }
 
@@ -72,6 +72,8 @@ void Indicator::count(int num1, int num2, bool repeat, Speed speed)
         mode_ = Mode::COUNTING;
         num1_ = num1;
         num2_ = num2;
+        counter1_ = num1;
+        counter2_ = num2;
         lastToggle_ = millis();
         set_(HIGH);
     }
@@ -104,6 +106,51 @@ bool Indicator::update()
 
     else if (mode_ == Mode::COUNTING)
     {
+        // reduce counter 1
+        if (counter1_ > 0)
+        {
+            if (state_ == HIGH && ((time - lastToggle_) >= on_ms))
+            {
+                set_(LOW);
+                lastToggle_ = time;
+                counter1_--;
+            }
+            else if (state_ == LOW && ((time - lastToggle_) >= off_ms))
+            {
+                set_(HIGH);
+                lastToggle_ = time;
+            }
+        }
+        // counter 1 is empty
+        else
+        {
+            if (counter2_ > 0)
+            {
+                if ((time - lastToggle_) >= pause_ms)
+                {
+                    set_(HIGH);
+                    counter1_ = counter2_;
+                    counter2_ = 0;
+                    lastToggle_ = time;
+                }
+            }
+            // counter 2 is empty, too
+            else if (repeat_)
+            {
+                // reset counters to starting values
+                if ((time - lastToggle_) >= ending_ms)
+                {
+                    set_(HIGH);
+                    counter1_ = num1_;
+                    counter2_ = num2_;
+                    lastToggle_ = time;
+                }
+            }
+            else
+            {
+                permanent(LOW);
+            }
+        }
     }
 
     return state_;

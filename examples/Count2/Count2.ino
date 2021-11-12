@@ -5,7 +5,7 @@ Indicator led;
 void setup()
 {
     pinMode(13, OUTPUT);
-    led.blink();
+    led.count(3, 5);
 }
 
 void loop()
