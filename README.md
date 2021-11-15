@@ -25,7 +25,7 @@
 This example blinks the built-in LED on pin 13 with a smooth fade effect and logarithmic
 brightness compensation in the following pattern:
 
-`Blink 2x → Short pause → Blink 3x → Long pause → Repeat ⮐`
+`Blink 2x → Short pause → Blink 3x → Long pause → Repeat`
 
 ```C
 #include <FadingIndicatorPin.h>
