@@ -43,7 +43,7 @@ void loop()
 }
 ```
 
-## API
+## Full API
 
 ```C
 // Without fading effect:
