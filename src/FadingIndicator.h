@@ -28,10 +28,10 @@ static const uint8_t LED_LOG_CURVE[256] = {
 class FadingIndicator : public Indicator
 {
 public:
-    FadingIndicator(bool logarithmic = false, int fade_speed = 10)
+    FadingIndicator(bool logarithmic = false, int fade_speed = 30)
     {
         Indicator();
-        configure(500, 500, 1000, 2000, 1000, 1000, 2000, 4000);
+        configure(300, 300, 750, 1200, 1000, 1000, 2000, 4000);
         logarithmic_ = logarithmic;
         fade_speed_ = abs(fade_speed);
         lastUpdate_ = millis();
@@ -41,14 +41,15 @@ public:
     int update()
     {
         int state = Indicator::update();
-        if (millis() - lastUpdate_ > 10)
+        uint32_t time = millis();
+        if (time - lastUpdate_ > 10)
         {
+            lastUpdate_ = time;
             int diff = state * 255 - value_;
             value_ += constrain(diff, -fade_speed_, fade_speed_);
-            if (logarithmic_)
-                value_ = LED_LOG_CURVE[value_];
-            lastUpdate_ = millis();
         }
+        if (logarithmic_)
+            return LED_LOG_CURVE[value_];
         return value_;
     }
 

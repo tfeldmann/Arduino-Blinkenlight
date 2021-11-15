@@ -6,7 +6,7 @@
 class FadingIndicatorPin : public FadingIndicator
 {
 public:
-    FadingIndicatorPin(int pin, bool logarithmic = true, int fade_speed = 10)
+    FadingIndicatorPin(int pin, bool logarithmic = true, int fade_speed = 20)
     {
         FadingIndicator(logarithmic, fade_speed);
         pin_ = pin;

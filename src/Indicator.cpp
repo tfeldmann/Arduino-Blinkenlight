@@ -1,22 +1,21 @@
 #include "Indicator.h"
-#include <Arduino.h>
 
 Indicator::Indicator()
 {
-    // some sane defaults for LED lights
+    // some good looking defaults for LED lights
     configure(200, 200, 400, 800, 800, 800, 1600, 3200);
-    permanent(false);
+    permanent(LOW);
 }
 
 void Indicator::configure(
-    int fast_on_ms,
-    int fast_off_ms,
-    int fast_pause_ms,
-    int fast_ending_ms,
-    int slow_on_ms,
-    int slow_off_ms,
-    int slow_pause_ms,
-    int slow_ending_ms)
+    unsigned int fast_on_ms,
+    unsigned int fast_off_ms,
+    unsigned int fast_pause_ms,
+    unsigned int fast_ending_ms,
+    unsigned int slow_on_ms,
+    unsigned int slow_off_ms,
+    unsigned int slow_pause_ms,
+    unsigned int slow_ending_ms)
 {
     this->fast_on_ms = fast_on_ms;
     this->fast_off_ms = fast_off_ms;
@@ -44,6 +43,12 @@ void Indicator::toggle()
     permanent(!isOn());
 }
 
+void Indicator::flash(unsigned long duration)
+{
+    flash_start_ = millis();
+    flash_duration_ = duration;
+}
+
 void Indicator::blink(Speed speed)
 {
     speed_ = speed;
@@ -67,9 +72,9 @@ void Indicator::pattern(int num1, int num2, bool repeat, Speed speed)
     speed_ = speed;
     repeat_ = repeat;
 
-    if (mode_ != Mode::COUNTING || num1_ != num1 || num2_ != num2)
+    if (mode_ != Mode::PATTERN || num1_ != num1 || num2_ != num2)
     {
-        mode_ = Mode::COUNTING;
+        mode_ = Mode::PATTERN;
         num1_ = num1;
         num2_ = num2;
         counter1_ = num1;
@@ -84,10 +89,10 @@ int Indicator::update()
     if (mode_ == Mode::ON || mode_ == Mode::OFF)
         return state_;
 
-    int on_ms = speed_ == Speed::FAST ? fast_on_ms : slow_on_ms;
-    int off_ms = speed_ == Speed::FAST ? fast_off_ms : slow_off_ms;
-    int pause_ms = speed_ == Speed::FAST ? fast_pause_ms : slow_pause_ms;
-    int ending_ms = speed_ == Speed::FAST ? fast_ending_ms : slow_ending_ms;
+    unsigned int on_ms = speed_ == Speed::FAST ? fast_on_ms : slow_on_ms;
+    unsigned int off_ms = speed_ == Speed::FAST ? fast_off_ms : slow_off_ms;
+    unsigned int pause_ms = speed_ == Speed::FAST ? fast_pause_ms : slow_pause_ms;
+    unsigned int ending_ms = speed_ == Speed::FAST ? fast_ending_ms : slow_ending_ms;
     uint32_t time = millis();
 
     if (mode_ == Mode::BLINKING)
@@ -104,18 +109,18 @@ int Indicator::update()
         }
     }
 
-    else if (mode_ == Mode::COUNTING)
+    else if (mode_ == Mode::PATTERN)
     {
         // reduce counter 1
         if (counter1_ > 0)
         {
-            if (state_ == HIGH && ((time - lastToggle_) >= on_ms))
+            if (state_ == HIGH && ((uint32_t)(time - lastToggle_) >= on_ms))
             {
                 set_(LOW);
                 lastToggle_ = time;
                 counter1_--;
             }
-            else if (state_ == LOW && ((time - lastToggle_) >= off_ms))
+            else if (state_ == LOW && ((uint32_t)(time - lastToggle_) >= off_ms))
             {
                 set_(HIGH);
                 lastToggle_ = time;
