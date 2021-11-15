@@ -3,19 +3,31 @@
 Indicator::Indicator()
 {
     // some good looking defaults for LED lights
-    configure(200, 200, 400, 800, 800, 800, 1600, 3200);
+    setTiming(200, 200, 400, 800, 800, 800, 1600, 3200);
     permanent(LOW);
 }
 
-void Indicator::configure(
-    unsigned int fast_on_ms,
-    unsigned int fast_off_ms,
-    unsigned int fast_pause_ms,
-    unsigned int fast_ending_ms,
-    unsigned int slow_on_ms,
-    unsigned int slow_off_ms,
-    unsigned int slow_pause_ms,
-    unsigned int slow_ending_ms)
+void Indicator::setTiming(uint16_t on_ms)
+{
+    fast_on_ms = on_ms;
+    fast_off_ms = on_ms;
+    fast_pause_ms = on_ms * 2;
+    fast_ending_ms = on_ms * 4;
+    slow_on_ms = on_ms * 2;
+    slow_off_ms = on_ms * 2;
+    slow_pause_ms = on_ms * 4;
+    slow_ending_ms = on_ms * 8;
+}
+
+void Indicator::setTiming(
+    uint16_t fast_on_ms,
+    uint16_t fast_off_ms,
+    uint16_t fast_pause_ms,
+    uint16_t fast_ending_ms,
+    uint16_t slow_on_ms,
+    uint16_t slow_off_ms,
+    uint16_t slow_pause_ms,
+    uint16_t slow_ending_ms)
 {
     this->fast_on_ms = fast_on_ms;
     this->fast_off_ms = fast_off_ms;
@@ -43,10 +55,10 @@ void Indicator::toggle()
     permanent(!isOn());
 }
 
-void Indicator::flash(unsigned long duration)
+void Indicator::flash(uint16_t duration_ms)
 {
     flash_start_ = millis();
-    flash_duration_ = duration;
+    flash_duration_ = duration_ms;
 }
 
 void Indicator::blink(Speed speed)
@@ -86,15 +98,24 @@ void Indicator::pattern(int num1, int num2, bool repeat, Speed speed)
 
 int Indicator::update()
 {
+    // flash overlay - returns to previous mode when finished
+    if (isFlashing())
+    {
+        set_(HIGH);
+        return state_;
+    }
+
+    // permanent mode
     if (mode_ == Mode::ON || mode_ == Mode::OFF)
         return state_;
 
-    unsigned int on_ms = speed_ == Speed::FAST ? fast_on_ms : slow_on_ms;
-    unsigned int off_ms = speed_ == Speed::FAST ? fast_off_ms : slow_off_ms;
-    unsigned int pause_ms = speed_ == Speed::FAST ? fast_pause_ms : slow_pause_ms;
-    unsigned int ending_ms = speed_ == Speed::FAST ? fast_ending_ms : slow_ending_ms;
     uint32_t time = millis();
+    uint16_t on_ms = speed_ == Speed::FAST ? fast_on_ms : slow_on_ms;
+    uint16_t off_ms = speed_ == Speed::FAST ? fast_off_ms : slow_off_ms;
+    uint16_t pause_ms = speed_ == Speed::FAST ? fast_pause_ms : slow_pause_ms;
+    uint16_t ending_ms = speed_ == Speed::FAST ? fast_ending_ms : slow_ending_ms;
 
+    // blinking mode
     if (mode_ == Mode::BLINKING)
     {
         if (state_ == HIGH && ((time - lastToggle_) >= on_ms))
@@ -109,18 +130,19 @@ int Indicator::update()
         }
     }
 
+    // pattern mode
     else if (mode_ == Mode::PATTERN)
     {
         // reduce counter 1
         if (counter1_ > 0)
         {
-            if (state_ == HIGH && ((uint32_t)(time - lastToggle_) >= on_ms))
+            if (state_ == HIGH && ((time - lastToggle_) >= on_ms))
             {
                 set_(LOW);
                 lastToggle_ = time;
                 counter1_--;
             }
-            else if (state_ == LOW && ((uint32_t)(time - lastToggle_) >= off_ms))
+            else if (state_ == LOW && ((time - lastToggle_) >= off_ms))
             {
                 set_(HIGH);
                 lastToggle_ = time;
@@ -164,4 +186,9 @@ int Indicator::update()
 void Indicator::set_(bool en)
 {
     state_ = en;
+}
+
+bool Indicator::isFlashing()
+{
+    return !((millis() - flash_start_) > flash_duration_);
 }

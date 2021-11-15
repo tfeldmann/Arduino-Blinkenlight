@@ -13,7 +13,7 @@
 - Super lightweight
 - Sane defaults (at least I tried)
 - Easily extendable
-- Non-blocking (no `delay()`)
+- Non-blocking (no `delay()`), no dynamic allocations
 
 ## Available classes
 

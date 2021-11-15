@@ -1,5 +1,4 @@
 #pragma once
-
 #include <Arduino.h>
 
 class Indicator
@@ -7,32 +6,34 @@ class Indicator
 public:
     enum Speed
     {
-        SLOW,
-        FAST,
+        SLOW = 0,
+        FAST = 1,
     };
 
     // settings
-    unsigned int fast_on_ms;
-    unsigned int fast_off_ms;
-    unsigned int fast_pause_ms;
-    unsigned int fast_ending_ms;
-    unsigned int slow_on_ms;
-    unsigned int slow_off_ms;
-    unsigned int slow_pause_ms;
-    unsigned int slow_ending_ms;
+    uint16_t fast_on_ms;
+    uint16_t fast_off_ms;
+    uint16_t fast_pause_ms;
+    uint16_t fast_ending_ms;
+    uint16_t slow_on_ms;
+    uint16_t slow_off_ms;
+    uint16_t slow_pause_ms;
+    uint16_t slow_ending_ms;
 
     // realtime state of the indicator
 
     Indicator();
-    void configure(
-        unsigned int fast_on_ms,
-        unsigned int fast_off_ms,
-        unsigned int fast_pause_ms,
-        unsigned int fast_ending_ms,
-        unsigned int slow_on_ms,
-        unsigned int slow_off_ms,
-        unsigned int slow_pause_ms,
-        unsigned int slow_ending_ms);
+
+    void setTiming(uint16_t on_ms);
+    void setTiming(
+        uint16_t fast_on_ms,
+        uint16_t fast_off_ms,
+        uint16_t fast_pause_ms,
+        uint16_t fast_ending_ms,
+        uint16_t slow_on_ms,
+        uint16_t slow_off_ms,
+        uint16_t slow_pause_ms,
+        uint16_t slow_ending_ms);
 
     bool isOn();
 
@@ -41,7 +42,7 @@ public:
     void blink(Speed speed = Speed::FAST);
     void pattern(int num, bool repeat = true, Speed speed = Speed::FAST);
     void pattern(int num1, int num2, bool repeat = true, Speed speed = Speed::FAST);
-    void flash(unsigned long duration);
+    void flash(uint16_t duration);
 
     virtual int update();
 
@@ -64,9 +65,10 @@ private:
     int num2_;
 
     // flash
-    unsigned long long flash_start_;
-    unsigned long flash_duration_;
+    uint32_t flash_start_;
+    uint16_t flash_duration_;
 
-    unsigned long long lastToggle_;
+    uint32_t lastToggle_;
     void set_(bool en);
+    bool isFlashing();
 };

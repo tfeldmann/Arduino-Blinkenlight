@@ -31,7 +31,7 @@ public:
     FadingIndicator(bool logarithmic = false, int fade_speed = 30)
     {
         Indicator();
-        configure(300, 300, 750, 1200, 1000, 1000, 2000, 4000);
+        setTiming(300, 300, 750, 1200, 1000, 1000, 2000, 4000);
         logarithmic_ = logarithmic;
         fade_speed_ = abs(fade_speed);
         lastUpdate_ = millis();
