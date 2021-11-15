@@ -108,7 +108,7 @@ bool isOn();
 int update();
 ```
 
-## My status indicator is controlled by CAN / I2C / SPI / ... What can I do?
+## My status indicator is controlled via CAN / I2C / SPI / ... What can I do?
 
 No problem! You have two options.
 
