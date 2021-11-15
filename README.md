@@ -13,11 +13,38 @@
 - Supports infinite blinking
 - Supports single flashes
 - Parameters for pause- / off- / on-time duration can be adjusted on the fly
-- Super-nice fading effects (optional)
+- Super-nice fading effects (optional) with logarithmic brightness compensation
 - Lightweight
 - Good-looking defaults (at least I tried)
 - Easily extendable
 - Non-blocking (no `delay()`), no dynamic allocations
+
+## Example usage
+
+This example blinks the built-in LED with a smooth fade effect and logarithmic
+brightness compensation in the following pattern:
+
+- Blink 2x
+- Pause
+- Blink 3x
+- Long pause
+- Repeat
+
+```Arduino
+#include <FadingIndicatorPin.h>
+
+FadingIndicatorPin led(13);
+
+void setup()
+{
+    led.pattern(2, 3);
+}
+
+void loop()
+{
+    led.update();
+}
+```
 
 ## Available classes
 
