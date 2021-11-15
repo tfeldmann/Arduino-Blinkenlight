@@ -21,6 +21,11 @@
 
 ## Example usage
 
+This example blinks the built-in LED with a smooth fade effect and logarithmic
+brightness compensation in the following pattern:
+
+Blink 2x -> Pause -> Blink 3x -> Longer pause -> Repeat
+
 ```C
 #include <FadingIndicatorPin.h>
 
@@ -36,15 +41,6 @@ void loop()
     led.update();
 }
 ```
-
-This example blinks the built-in LED with a smooth fade effect and logarithmic
-brightness compensation in the following pattern:
-
-- Blink 2x
-- Pause
-- Blink 3x
-- Long pause
-- Repeat
 
 ## Available classes
 
