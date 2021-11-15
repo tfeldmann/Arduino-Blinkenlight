@@ -110,9 +110,12 @@ int update();
 
 ## My status indicator is controlled by CAN / I2C / SPI / ... What can I do?
 
-No problem! Just subclass the generic `Indicator` class from `<Indicator.h>` or use it
-directly. The `bool Indicator::update()`-method returns a boolean whether the status is
-currently `HIGH` or `LOW`. You can then send this value to your status indicator.
+No problem! You have two options.
 
-Have a look at `IndicatorPin.h` for a subclassing example or look into
-`examples/GenericBlink` for direct usage.
+- Use the generic `Indicator` class from `<Indicator.h>`. The `.update()`-method returns
+  a boolean whether the status is currently `HIGH` or `LOW`. You can then send this
+  value to your status indicator (see `examples/GenericBlink`). Use the `FadingIndictor`
+  class if you want fading effects. Here the `update` method returns an integer `0..255`.
+
+- Subclass the `Indicator` class with custom logic. This is what `IndicatorPin` does
+  internally (see `src/IndicatorPin.h`).
