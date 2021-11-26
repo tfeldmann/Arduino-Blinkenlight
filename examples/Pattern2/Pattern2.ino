@@ -1,18 +1,18 @@
-#include <IndicatorPin.h>
+#include <Indicator.h>
 
-IndicatorPin led(13);
+Indicator led(13);
 
 void setup()
 {
     // This will set the LED to pattern mode:
     //
-    // 1. blink three times
+    // 1. blink two times
     // 2. pause
-    // 3. blink five times
+    // 3. blink three times
     // 4. longer pause
     //
     // (repeat)
-    led.pattern(3, 5);
+    led.pattern(2, 3);
 }
 
 void loop()

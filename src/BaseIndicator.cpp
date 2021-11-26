@@ -1,13 +1,15 @@
-#include "Indicator.h"
+#include "BaseIndicator.h"
 
-Indicator::Indicator()
+BaseIndicator::BaseIndicator()
 {
     // some good looking defaults for LED lights
     setTiming(200, 200, 400, 800, 800, 800, 1600, 3200);
     permanent(LOW);
+    prev_state_ = LOW;
+    write(LOW);
 }
 
-void Indicator::setTiming(uint16_t on_ms)
+void BaseIndicator::setTiming(uint16_t on_ms)
 {
     fast_on_ms = on_ms;
     fast_off_ms = on_ms;
@@ -19,7 +21,7 @@ void Indicator::setTiming(uint16_t on_ms)
     slow_ending_ms = on_ms * 8;
 }
 
-void Indicator::setTiming(
+void BaseIndicator::setTiming(
     uint16_t fast_on_ms,
     uint16_t fast_off_ms,
     uint16_t fast_pause_ms,
@@ -39,29 +41,29 @@ void Indicator::setTiming(
     this->slow_ending_ms = slow_ending_ms;
 }
 
-bool Indicator::isOn()
+bool BaseIndicator::isOn()
 {
     return mode_ != Mode::OFF;
 }
 
-void Indicator::permanent(bool enable)
+void BaseIndicator::permanent(bool enable)
 {
     mode_ = enable ? Mode::ON : Mode::OFF;
     set_(enable);
 }
 
-void Indicator::toggle()
+void BaseIndicator::toggle()
 {
     permanent(!isOn());
 }
 
-void Indicator::flash(uint16_t duration_ms)
+void BaseIndicator::flash(uint16_t duration_ms)
 {
     flash_start_ = millis();
     flash_duration_ = duration_ms;
 }
 
-void Indicator::blink(Speed speed)
+void BaseIndicator::blink(Speed speed)
 {
     speed_ = speed;
 
@@ -74,12 +76,12 @@ void Indicator::blink(Speed speed)
     }
 }
 
-void Indicator::pattern(int num, bool repeat, Speed speed)
+void BaseIndicator::pattern(int num, bool repeat, Speed speed)
 {
     pattern(num, 0, repeat, speed);
 }
 
-void Indicator::pattern(int num1, int num2, bool repeat, Speed speed)
+void BaseIndicator::pattern(int num1, int num2, bool repeat, Speed speed)
 {
     speed_ = speed;
     repeat_ = repeat;
@@ -96,7 +98,7 @@ void Indicator::pattern(int num1, int num2, bool repeat, Speed speed)
     }
 }
 
-int Indicator::update()
+int BaseIndicator::update()
 {
     // flash overlay - returns to previous mode when finished
     if (isFlashing())
@@ -183,12 +185,23 @@ int Indicator::update()
     return state_;
 }
 
-void Indicator::set_(bool en)
+void BaseIndicator::write(int state)
 {
-    state_ = en;
+    // do nothing. can be overwritten.
 }
 
-bool Indicator::isFlashing()
+void BaseIndicator::set_(bool en)
+{
+    state_ = en;
+    // only write changes
+    if (prev_state_ != state_)
+    {
+        write(state_);
+        prev_state_ = state_;
+    }
+}
+
+bool BaseIndicator::isFlashing()
 {
     return !((millis() - flash_start_) > flash_duration_);
 }

@@ -5,9 +5,9 @@ The `update()` method returns HIGH or LOW that you can use however you want.
 Of course this example would be easer with a `IndicatorPin` which handles the
 digital output automatically.
 */
-#include <Indicator.h>
+#include <BaseIndicator.h>
 
-Indicator myIndicator;
+BaseIndicator myIndicator;
 
 void setup()
 {

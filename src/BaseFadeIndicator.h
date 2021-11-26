@@ -1,7 +1,7 @@
 #pragma once
 #include <Arduino.h>
 
-#include "Indicator.h"
+#include "BaseIndicator.h"
 
 // logarithmic led brightness curve
 // clang-format off
@@ -25,28 +25,35 @@ static const uint8_t LED_LOG_CURVE[256] = {
 };
 // clang-format on
 
-class FadingIndicator : public Indicator
+class BaseFadeIndicator : public BaseIndicator
 {
 public:
-    FadingIndicator(bool logarithmic = false, int fade_speed = 30)
+    BaseFadeIndicator(bool logarithmic = false, int fade_speed = 30)
     {
-        Indicator();
+        BaseIndicator();
         setTiming(300, 300, 750, 1200, 1000, 1000, 2000, 4000);
         logarithmic_ = logarithmic;
         fade_speed_ = abs(fade_speed);
         lastUpdate_ = millis();
         value_ = 0;
+        write(0);
     }
 
     int update()
     {
-        int state = Indicator::update();
+        int state = BaseIndicator::update();
         uint32_t time = millis();
         if (time - lastUpdate_ > 10)
         {
             lastUpdate_ = time;
             int diff = state * 255 - value_;
             value_ += constrain(diff, -fade_speed_, fade_speed_);
+            if (diff)
+            {
+                int result = logarithmic_ ? LED_LOG_CURVE[value_] : value_;
+                write(value_);
+                return value_;
+            }
         }
         if (logarithmic_)
             return LED_LOG_CURVE[value_];
