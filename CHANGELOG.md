@@ -2,7 +2,7 @@
 
 ## WIP
 
-- _Revamped API!_
+- **Revamped API!**
 - New: writes the state only on changes, not on every update
 - Renamed the classes and header files:
   - `IndicatorPin` -> `Indicator`
