@@ -17,7 +17,7 @@
 - Parameters for pause- / off- / on-time duration can be adjusted on the fly
 - Super-nice fading effects (optional) with logarithmic brightness compensation for LEDs
 - Lightweight
-- Easily extendable
+- Easily extendable to control components over SPI / CAN / I2C / ...
 - Good-looking defaults (at least I tried)
 
 ## Example
