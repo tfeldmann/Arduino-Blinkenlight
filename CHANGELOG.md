@@ -2,11 +2,13 @@
 
 ## WIP
 
-- API changes:
+- Only writes the state on changes
+- Renamed the classes:
   - `IndicatorPin` -> `Indicator`
   - `FadingIndicatorPin` -> `FadeIndicator`
   - `Indicator` -> `BaseIndicator`
   - `FadingIndicator` -> `BaseFadeIndicator`
+- Code cleanups
 
 TODO:
 
