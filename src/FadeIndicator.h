@@ -16,8 +16,6 @@ public:
     void write(int state) override
     {
         analogWrite(pin_, state);
-        Serial.print("Fade: ");
-        Serial.println(state);
     }
 
 private:
