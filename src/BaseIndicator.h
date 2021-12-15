@@ -1,56 +1,61 @@
 #pragma once
 #include <Arduino.h>
 
+typedef struct
+{
+    uint16_t on_ms;
+    uint16_t off_ms;
+    uint16_t pause_ms;
+    uint16_t ending_ms;
+} SpeedSetting;
+
+const SpeedSetting SPEED_SLOW = {
+    .on_ms = 800,
+    .off_ms = 800,
+    .pause_ms = 1600,
+    .ending_ms = 3200,
+};
+
+const SpeedSetting SPEED_FAST = {
+    .on_ms = 200,
+    .off_ms = 200,
+    .pause_ms = 400,
+    .ending_ms = 800,
+};
+
 class BaseIndicator
 {
 public:
-    enum Speed
-    {
-        SLOW = 0,
-        FAST = 1,
-    };
-
-    // settings
-    uint16_t fast_on_ms;
-    uint16_t fast_off_ms;
-    uint16_t fast_pause_ms;
-    uint16_t fast_ending_ms;
-    uint16_t slow_on_ms;
-    uint16_t slow_off_ms;
-    uint16_t slow_pause_ms;
-    uint16_t slow_ending_ms;
-
-    // realtime state of the indicator
-
     BaseIndicator();
 
-    void setTiming(uint16_t on_ms);
-    void setTiming(
-        uint16_t fast_on_ms,
-        uint16_t fast_off_ms,
-        uint16_t fast_pause_ms,
-        uint16_t fast_ending_ms,
-        uint16_t slow_on_ms,
-        uint16_t slow_off_ms,
-        uint16_t slow_pause_ms,
-        uint16_t slow_ending_ms);
+    void setSpeed(uint16_t on_ms);
+    void setSpeed(
+        uint16_t on_ms,
+        uint16_t off_ms,
+        uint16_t pause_ms,
+        uint16_t ending_ms);
+    void setSpeed(SpeedSetting setting);
 
     bool isOn();
 
+    void on();
+    void off();
     void toggle();
     void permanent(bool enable);
-    void blink(Speed speed = Speed::FAST);
-    void pattern(int num, bool repeat = true, Speed speed = Speed::FAST);
-    void pattern(int num1, int num2, bool repeat = true, Speed speed = Speed::FAST);
+    void blink(SpeedSetting speed = SPEED_FAST);
+    void pattern(uint8_t num, bool repeat = true, SpeedSetting speed = SPEED_FAST);
+    void pattern(uint8_t num1, uint8_t num2, bool repeat = true, SpeedSetting speed = SPEED_FAST);
     void flash(uint16_t duration_ms);
+    void pause(uint16_t duration_ms);
 
     virtual int update();
     virtual void write(int state);
 
+    SpeedSetting setting;
+
 private:
     bool state_;
     bool prev_state_;
-    Speed speed_;
     enum Mode
     {
         OFF,
@@ -58,17 +63,18 @@ private:
         BLINKING,
         PATTERN,
     } mode_;
-    int counter1_;
-    int counter2_;
-    bool repeat_;
+    uint8_t counter1_;
+    uint8_t counter2_;
 
-    // used for remembering PATTERN settings
-    int num1_;
-    int num2_;
+    // used for remembering repeating PATTERN settings
+    bool repeat_;
+    uint8_t num1_;
+    uint8_t num2_;
 
     // flash
     uint32_t flash_start_;
     uint16_t flash_duration_;
+    bool flash_state_;
 
     uint32_t lastToggle_;
     void set_(bool en);

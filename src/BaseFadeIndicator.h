@@ -31,7 +31,7 @@ public:
     BaseFadeIndicator(bool logarithmic = false, int fade_speed = 30)
         : BaseIndicator(), fade_speed_(abs(fade_speed)), logarithmic_(logarithmic)
     {
-        setTiming(300, 300, 750, 1200, 1000, 1000, 2000, 4000);
+        setSpeed(300, 300, 750, 1200, 1000, 1000, 2000, 4000);
         lastUpdate_ = millis();
         value_ = 0;
         write(0);
