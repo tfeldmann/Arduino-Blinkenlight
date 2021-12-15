@@ -28,10 +28,10 @@ static const uint8_t LED_LOG_CURVE[256] = {
 class BaseFadeIndicator : public BaseIndicator
 {
 public:
-    BaseFadeIndicator(bool logarithmic = false, int fade_speed = 30)
+    BaseFadeIndicator(bool logarithmic = false, int fadeSpeed = 30)
         : BaseIndicator(),
           value_(0),
-          fade_speed_(abs(fade_speed)),
+          fadeSpeed_(abs(fadeSpeed)),
           logarithmic_(logarithmic)
     {
         setSpeed(300, 300, 750, 1200);
@@ -47,7 +47,7 @@ public:
         {
             lastUpdate_ = time;
             int diff = state * 255 - value_;
-            value_ += constrain(diff, -fade_speed_, fade_speed_);
+            value_ += constrain(diff, -fadeSpeed_, fadeSpeed_);
 
             // only write changes
             if (diff)
@@ -70,7 +70,7 @@ public:
 
 private:
     int value_;
-    int fade_speed_;
+    int fadeSpeed_;
     bool logarithmic_;
     unsigned long long lastUpdate_;
 };

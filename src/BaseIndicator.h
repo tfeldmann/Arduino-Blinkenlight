@@ -62,7 +62,7 @@ public:
 
 private:
     bool state_;
-    bool prev_state_;
+    bool prevState_;
     enum Mode
     {
         OFF,
@@ -79,9 +79,9 @@ private:
     int num2_;
 
     // flash
-    uint32_t flash_start_;
-    uint16_t flash_duration_;
-    bool flash_state_;
+    uint32_t flashStart_;
+    uint16_t flashDuration_;
+    bool flashState_;
 
     uint32_t lastToggle_;
     void set_(bool en);

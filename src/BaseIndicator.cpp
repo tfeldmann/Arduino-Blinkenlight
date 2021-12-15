@@ -1,7 +1,7 @@
 #include "BaseIndicator.h"
 
 BaseIndicator::BaseIndicator()
-    : prev_state_(LOW)
+    : prevState_(LOW)
 {
     permanent(LOW);
     write(LOW);
@@ -96,16 +96,16 @@ void BaseIndicator::pattern(int num1, int num2, bool repeat, SpeedSetting speed)
 
 void BaseIndicator::flash(uint16_t duration_ms)
 {
-    flash_start_ = millis();
-    flash_duration_ = duration_ms;
-    flash_state_ = HIGH;
+    flashStart_ = millis();
+    flashDuration_ = duration_ms;
+    flashState_ = HIGH;
 }
 
 void BaseIndicator::pause(uint16_t duration_ms)
 {
-    flash_start_ = millis();
-    flash_duration_ = duration_ms;
-    flash_state_ = LOW;
+    flashStart_ = millis();
+    flashDuration_ = duration_ms;
+    flashState_ = LOW;
 }
 
 int BaseIndicator::update()
@@ -113,7 +113,7 @@ int BaseIndicator::update()
     // flash overlay - returns to previous mode when finished
     if (isFlashing())
     {
-        set_(flash_state_);
+        set_(flashState_);
         return state_;
     }
 
@@ -200,14 +200,14 @@ void BaseIndicator::set_(bool en)
 {
     state_ = en;
     // only write changes
-    if (prev_state_ != state_)
+    if (prevState_ != state_)
     {
         write(state_);
-        prev_state_ = state_;
+        prevState_ = state_;
     }
 }
 
 bool BaseIndicator::isFlashing()
 {
-    return !((millis() - flash_start_) > flash_duration_);
+    return !((millis() - flashStart_) > flashDuration_);
 }
