@@ -43,7 +43,7 @@ public:
         uint16_t ending_ms);
     void setSpeed(SpeedSetting setting);
 
-    // `true` if the indicator is currently blinking, showing a pattern or flashing
+    // `true` if the indicator is currently blinking, showing a pattern, flashing or pausing
     bool isOn();
 
     // set permanently ON
@@ -81,13 +81,18 @@ public:
     // Returns the current value of the indiciator (LOW / HIGH)
     virtual int update();
 
+    // this is called on state changes and can be implemented in your subclasses
     virtual void write(int state);
 
     SpeedSetting setting;
 
-private:
+protected:
     bool state_;
     bool prevState_;
+    virtual void set(int state);
+    bool isFlashing();
+
+private:
     enum Mode
     {
         OFF,
@@ -109,6 +114,4 @@ private:
     bool flashState_;
 
     uint32_t lastToggle_;
-    void set_(bool en);
-    bool isFlashing();
 };

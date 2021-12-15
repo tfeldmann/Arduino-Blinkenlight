@@ -30,13 +30,11 @@ class BaseFadeIndicator : public BaseIndicator
 public:
     BaseFadeIndicator(bool logarithmic = false, int fadeSpeed = 30)
         : BaseIndicator(),
-          value_(0),
+          output_(0),
           fadeSpeed_(abs(fadeSpeed)),
-          logarithmic_(logarithmic)
+          logarithmic_(logarithmic),
+          lastUpdate_(millis())
     {
-        setSpeed(300, 300, 750, 1200);
-        lastUpdate_ = millis();
-        write(0);
     }
 
     int update()
@@ -46,20 +44,20 @@ public:
         if (time - lastUpdate_ > 10)
         {
             lastUpdate_ = time;
-            int diff = state * 255 - value_;
-            value_ += constrain(diff, -fadeSpeed_, fadeSpeed_);
+            int diff = state * 255 - output_;
+            output_ += constrain(diff, -fadeSpeed_, fadeSpeed_);
 
             // only write changes
             if (diff)
             {
-                int result = logarithmic_ ? LED_LOG_CURVE[value_] : value_;
+                int result = logarithmic_ ? LED_LOG_CURVE[output_] : output_;
                 write(result);
                 return result;
             }
         }
         if (logarithmic_)
-            return LED_LOG_CURVE[value_];
-        return value_;
+            return LED_LOG_CURVE[output_];
+        return output_;
     }
 
     virtual void write(int state)
@@ -68,9 +66,16 @@ public:
         // You can override it and set your indicator here.
     }
 
+    void set(int state) override
+    {
+        // we have to override this method here to prohibit the `BaseIndicator` from
+        // calling `write`. Otherwise we write unwanted 0 and 1 instead of fading.
+        state_ = state;
+    }
+
 private:
-    int value_;
-    int fadeSpeed_;
+    int output_;
+    uint8_t fadeSpeed_;
     bool logarithmic_;
-    unsigned long long lastUpdate_;
+    uint32_t lastUpdate_;
 };

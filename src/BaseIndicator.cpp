@@ -55,7 +55,7 @@ void BaseIndicator::toggle()
 void BaseIndicator::permanent(bool enable)
 {
     mode_ = enable ? Mode::ON : Mode::OFF;
-    set_(enable);
+    set(enable);
     update();
 }
 
@@ -68,7 +68,7 @@ void BaseIndicator::blink(SpeedSetting speed)
     {
         mode_ = Mode::BLINKING;
         lastToggle_ = millis();
-        set_(HIGH);
+        set(HIGH);
     }
     update();
 }
@@ -92,7 +92,7 @@ void BaseIndicator::pattern(int num1, int num2, bool repeat, SpeedSetting speed)
         counter1_ = num1;
         counter2_ = num2;
         lastToggle_ = millis();
-        set_(HIGH);
+        set(HIGH);
     }
     update();
 }
@@ -118,7 +118,7 @@ int BaseIndicator::update()
     // flash overlay - returns to previous mode when finished
     if (isFlashing())
     {
-        set_(flashState_);
+        set(flashState_);
         return state_;
     }
 
@@ -133,12 +133,12 @@ int BaseIndicator::update()
     {
         if (state_ == HIGH && ((time - lastToggle_) >= setting.on_ms))
         {
-            set_(LOW);
+            set(LOW);
             lastToggle_ = time;
         }
         else if (state_ == LOW && ((time - lastToggle_) >= setting.off_ms))
         {
-            set_(HIGH);
+            set(HIGH);
             lastToggle_ = time;
         }
     }
@@ -151,13 +151,13 @@ int BaseIndicator::update()
         {
             if (state_ == HIGH && ((time - lastToggle_) >= setting.on_ms))
             {
-                set_(LOW);
+                set(LOW);
                 lastToggle_ = time;
                 counter1_--;
             }
             else if (state_ == LOW && ((time - lastToggle_) >= setting.off_ms))
             {
-                set_(HIGH);
+                set(HIGH);
                 lastToggle_ = time;
             }
         }
@@ -168,7 +168,7 @@ int BaseIndicator::update()
             {
                 if ((time - lastToggle_) >= setting.pause_ms)
                 {
-                    set_(HIGH);
+                    set(HIGH);
                     counter1_ = counter2_;
                     counter2_ = 0;
                     lastToggle_ = time;
@@ -180,7 +180,7 @@ int BaseIndicator::update()
                 // reset counters to starting values
                 if ((time - lastToggle_) >= setting.ending_ms)
                 {
-                    set_(HIGH);
+                    set(HIGH);
                     counter1_ = num1_;
                     counter2_ = num2_;
                     lastToggle_ = time;
@@ -201,9 +201,9 @@ void BaseIndicator::write(int state)
     // do nothing. can be overwritten.
 }
 
-void BaseIndicator::set_(bool en)
+void BaseIndicator::set(int state)
 {
-    state_ = en;
+    state_ = state;
     // only write changes
     if (prevState_ != state_)
     {
