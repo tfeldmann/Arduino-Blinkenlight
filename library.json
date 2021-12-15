@@ -22,7 +22,8 @@
     "platforms": "*",
     "export": {
         "exclude": [
-            "*.sh"
+            "*.sh",
+            ".github"
         ]
     }
 }
