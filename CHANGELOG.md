@@ -2,17 +2,13 @@
 
 ## WIP
 
-- Only writes the state on changes
+- New: writes the state only on changes, not on every update
 - Renamed the classes:
   - `IndicatorPin` -> `Indicator`
   - `FadingIndicatorPin` -> `FadeIndicator`
   - `Indicator` -> `BaseIndicator`
   - `FadingIndicator` -> `BaseFadeIndicator`
 - Code cleanups
-
-TODO:
-
-- Bug: BaseIndicator still writes 0 and 1 even in BaseFadeIndicator
 
 ## v1.1.0
 
