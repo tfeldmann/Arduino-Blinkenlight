@@ -43,19 +43,44 @@ public:
         uint16_t ending_ms);
     void setSpeed(SpeedSetting setting);
 
+    // `true` if the indicator is currently blinking, showing a pattern or flashing
     bool isOn();
 
+    // set permanently ON
     void on();
+
+    // set permanently OFF
     void off();
+
+    // toggle between on / off
     void toggle();
+
+    // set permanently to `enable`
     void permanent(bool enable);
+
+    // blink infinitely
     void blink(SpeedSetting speed = SPEED_FAST);
-    void pattern(int num, bool repeat = true, SpeedSetting speed = SPEED_FAST);
-    void pattern(int num1, int num2, bool repeat = true, SpeedSetting speed = SPEED_FAST);
+
+    // blink `num` times, then long pause
+    // repeats if `repeat` is set, otherwise it is OFF afterwards
+    void pattern(int num,
+                 bool repeat = true, SpeedSetting speed = SPEED_FAST);
+
+    // blink `num1` times, short pause, blink `num2` times, long pause
+    // repeats if `repeat` is set, otherwise it is OFF afterwards
+    void pattern(int num1, int num2,
+                 bool repeat = true, SpeedSetting speed = SPEED_FAST);
+
+    // turn ON for the given duration in ms. Continues in the previous mode afterwards.
     void flash(uint16_t duration_ms);
+
+    // turn OFF for the given duration in ms. Continues in the previous mode afterwards.
     void pause(uint16_t duration_ms);
 
+    // You must call this in your loop!
+    // Returns the current value of the indiciator (LOW / HIGH)
     virtual int update();
+
     virtual void write(int state);
 
     SpeedSetting setting;

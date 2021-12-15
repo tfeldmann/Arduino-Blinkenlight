@@ -22,15 +22,18 @@
 
 ## Example
 
-This example blinks the built-in LED on pin 13 with a smooth fade effect and logarithmic
-brightness compensation in the following pattern:
+This example blinks the built-in LED on pin 13 in the following pattern:
 
-`Blink 2x → Short pause → Blink 3x → Long pause → Repeat`
+- Blink 2x
+- Short pause
+- Blink 3x
+- Long pause
+- Repeat
 
 ```C
-#include <FadingIndicatorPin.h>
+#include <FadeIndicator.h>
 
-FadingIndicatorPin led(13);
+FadeIndicator led(13);
 
 void setup()
 {
@@ -42,6 +45,12 @@ void loop()
     led.update();
 }
 ```
+
+Easy, uh? And it's not only blinking, it does so with smooth fading effects and
+logarithmic LED brightness compensation. Your boards never looked more professional! /s
+
+> Note: If you don't love the fading effects, just use the `Indicator`-class instead of
+> `FadeIndicator`.
 
 ## Full API
 

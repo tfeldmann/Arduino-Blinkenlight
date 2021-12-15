@@ -34,7 +34,7 @@ void BaseIndicator::setSpeed(SpeedSetting setting)
 
 bool BaseIndicator::isOn()
 {
-    return mode_ != Mode::OFF;
+    return isFlashing() || mode_ != Mode::OFF;
 }
 
 void BaseIndicator::on()
@@ -56,6 +56,7 @@ void BaseIndicator::permanent(bool enable)
 {
     mode_ = enable ? Mode::ON : Mode::OFF;
     set_(enable);
+    update();
 }
 
 void BaseIndicator::blink(SpeedSetting speed)
@@ -69,6 +70,7 @@ void BaseIndicator::blink(SpeedSetting speed)
         lastToggle_ = millis();
         set_(HIGH);
     }
+    update();
 }
 
 void BaseIndicator::pattern(int num, bool repeat, SpeedSetting speed)
@@ -92,6 +94,7 @@ void BaseIndicator::pattern(int num1, int num2, bool repeat, SpeedSetting speed)
         lastToggle_ = millis();
         set_(HIGH);
     }
+    update();
 }
 
 void BaseIndicator::flash(uint16_t duration_ms)
@@ -99,6 +102,7 @@ void BaseIndicator::flash(uint16_t duration_ms)
     flashStart_ = millis();
     flashDuration_ = duration_ms;
     flashState_ = HIGH;
+    update();
 }
 
 void BaseIndicator::pause(uint16_t duration_ms)
@@ -106,6 +110,7 @@ void BaseIndicator::pause(uint16_t duration_ms)
     flashStart_ = millis();
     flashDuration_ = duration_ms;
     flashState_ = LOW;
+    update();
 }
 
 int BaseIndicator::update()
