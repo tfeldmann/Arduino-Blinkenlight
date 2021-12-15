@@ -23,7 +23,9 @@
     "export": {
         "exclude": [
             "*.sh",
-            ".github"
+            ".github",
+            "platformio.ini",
+            "test"
         ]
     }
 }
