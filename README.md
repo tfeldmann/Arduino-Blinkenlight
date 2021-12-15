@@ -18,7 +18,7 @@
 - Super-nice fading effects (optional) with logarithmic brightness compensation for LEDs
 - Lightweight
 - Easily extendable to control components over SPI / CAN / I2C / ...
-- Good-looking defaults (at least I tried)
+- Comes with good-looking defaults (at least I tried)
 
 ## Example
 
@@ -46,7 +46,7 @@ void loop()
 }
 ```
 
-Easy, uh? And it's not only blinking, it does so with smooth fading effects and
+Easy, uh? It's not only blinking, it does so with smooth fading effects and
 logarithmic LED brightness compensation. Your boards never looked more professional! /s
 
 > Note: If you don't love the fading effects, just use the `Indicator`-class instead of
