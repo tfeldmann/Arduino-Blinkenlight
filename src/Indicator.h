@@ -7,17 +7,15 @@ class Indicator : public BaseIndicator
 {
 public:
     Indicator(int pin, bool invert = false)
+        : BaseIndicator(), pin_(pin), invert_(invert)
     {
-        BaseIndicator();
-        pin_ = pin;
-        invert_ = invert;
         pinMode(pin_, OUTPUT);
-        write(LOW);
     }
 
     void write(int state) override
     {
         digitalWrite(pin_, state ^ invert_);
+        Serial.println(state);
     }
 
 private:
