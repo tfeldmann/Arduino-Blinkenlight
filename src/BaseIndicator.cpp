@@ -71,13 +71,13 @@ void BaseIndicator::blink(SpeedSetting speed)
     }
 }
 
-void BaseIndicator::pattern(uint8_t num, bool repeat, SpeedSetting speed)
+void BaseIndicator::pattern(int num, bool repeat, SpeedSetting speed)
 {
     setSpeed(speed);
     pattern(num, 0, repeat, speed);
 }
 
-void BaseIndicator::pattern(uint8_t num1, uint8_t num2, bool repeat, SpeedSetting speed)
+void BaseIndicator::pattern(int num1, int num2, bool repeat, SpeedSetting speed)
 {
     setSpeed(speed);
     repeat_ = repeat;

@@ -9,11 +9,11 @@ typedef struct
     uint16_t ending_ms;
 } SpeedSetting;
 
-const SpeedSetting SPEED_SLOW = {
-    .on_ms = 800,
-    .off_ms = 800,
-    .pause_ms = 1600,
-    .ending_ms = 3200,
+const SpeedSetting SPEED_RAPID = {
+    .on_ms = 100,
+    .off_ms = 100,
+    .pause_ms = 200,
+    .ending_ms = 400,
 };
 
 const SpeedSetting SPEED_FAST = {
@@ -21,6 +21,13 @@ const SpeedSetting SPEED_FAST = {
     .off_ms = 200,
     .pause_ms = 400,
     .ending_ms = 800,
+};
+
+const SpeedSetting SPEED_SLOW = {
+    .on_ms = 800,
+    .off_ms = 800,
+    .pause_ms = 1600,
+    .ending_ms = 3200,
 };
 
 class BaseIndicator
@@ -43,8 +50,8 @@ public:
     void toggle();
     void permanent(bool enable);
     void blink(SpeedSetting speed = SPEED_FAST);
-    void pattern(uint8_t num, bool repeat = true, SpeedSetting speed = SPEED_FAST);
-    void pattern(uint8_t num1, uint8_t num2, bool repeat = true, SpeedSetting speed = SPEED_FAST);
+    void pattern(int num, bool repeat = true, SpeedSetting speed = SPEED_FAST);
+    void pattern(int num1, int num2, bool repeat = true, SpeedSetting speed = SPEED_FAST);
     void flash(uint16_t duration_ms);
     void pause(uint16_t duration_ms);
 
@@ -68,8 +75,8 @@ private:
 
     // used for remembering repeating PATTERN settings
     bool repeat_;
-    uint8_t num1_;
-    uint8_t num2_;
+    int num1_;
+    int num2_;
 
     // flash
     uint32_t flash_start_;

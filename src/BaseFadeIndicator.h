@@ -29,11 +29,13 @@ class BaseFadeIndicator : public BaseIndicator
 {
 public:
     BaseFadeIndicator(bool logarithmic = false, int fade_speed = 30)
-        : BaseIndicator(), fade_speed_(abs(fade_speed)), logarithmic_(logarithmic)
+        : BaseIndicator(),
+          value_(0),
+          fade_speed_(abs(fade_speed)),
+          logarithmic_(logarithmic)
     {
-        setSpeed(300, 300, 750, 1200, 1000, 1000, 2000, 4000);
+        setSpeed(300, 300, 750, 1200);
         lastUpdate_ = millis();
-        value_ = 0;
         write(0);
     }
 
@@ -67,7 +69,6 @@ public:
     }
 
 private:
-    int pin_;
     int value_;
     int fade_speed_;
     bool logarithmic_;

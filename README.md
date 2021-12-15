@@ -12,13 +12,13 @@
 - Basics: On / off / toggle
 - Supports blink patterns in the style of "Blink x times, pause, blink y times, repeat"
 - Supports infinite blinking
-- Supports single flashes
+- Supports single flashes and pauses, resuming the previous mode
+- Completely non-blocking (no `delay()`)
 - Parameters for pause- / off- / on-time duration can be adjusted on the fly
-- Super-nice fading effects (optional) with logarithmic brightness compensation
+- Super-nice fading effects (optional) with logarithmic brightness compensation for LEDs
 - Lightweight
-- Good-looking defaults (at least I tried)
 - Easily extendable
-- Non-blocking (no `delay()`), no dynamic allocations
+- Good-looking defaults (at least I tried)
 
 ## Example
 
