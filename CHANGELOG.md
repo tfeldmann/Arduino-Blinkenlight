@@ -1,6 +1,6 @@
 # Changelog
 
-## WIP
+## v2.0.0 (2021-12-16)
 
 - **Revamped API!**
 - New: writes the state only on changes, not on every update

@@ -56,12 +56,12 @@ logarithmic LED brightness compensation. Your boards never looked more professio
 
 ```C
 // Without fading effect:
-#include <IndicatorPin.h>
-IndicatorPin myPin(13);
+#include <Indicator.h>
+Indicator myPin(13);
 
 // With fading effect:
-#include <FadingIndicatorPin.h>
-FadingIndicatorPin myPin(13);
+#include <FadeIndicator.h>
+FadeIndicator myPin(13);
 
 // now in your code you can do:
 myPin.permanent(LOW);
@@ -70,45 +70,63 @@ myPin.blink();
 ```
 
 ```C
+// set permanently ON
+void on();
+
+// set permanently OFF
+void off();
+
 // toggle between on / off
 void toggle();
 
 // set ON / OFF permanently
 void permanent(bool enable);
 
-// blink infinitely. `speed` can be 0 (slow) or 1 (fast).
-void blink(Speed speed = Speed::FAST);
+// blink infinitely. Speed is fast by default.
+void blink(SpeedSetting speed = SPEED_FAST);
 
 // blink `num` times, then long pause
 // repeats, if `repeat` is set, OFF otherwise.
-void pattern(int num, bool repeat = true, Speed speed = Speed::FAST);
+void pattern(int num, bool repeat = true, SpeedSetting speed = SPEED_FAST);
 
 // blink `num1` times, short pause, blink `num2` times, long pause
 // repeats, if `repeat` is set, OFF otherwise.
-void pattern(int num1, int num2, bool repeat = true, Speed speed = Speed::FAST);
+void pattern(int num1, int num2, bool repeat = true, SpeedSetting speed = SPEED_FAST);
 
 // turn ON for the given duration in ms. Continues in the previous mode afterwards.
 void flash(uint16_t duration_ms);
 
+// turn OFF for the given duration in ms. Continues in the previous mode afterwards.
+void pause(uint16_t duration_ms);
+
 // setup the timing parameters
-void setTiming(
-    uint16_t fast_on_ms,
-    uint16_t fast_off_ms,
-    uint16_t fast_pause_ms,
-    uint16_t fast_ending_ms,
-    uint16_t slow_on_ms,
-    uint16_t slow_off_ms,
-    uint16_t slow_pause_ms,
-    uint16_t slow_ending_ms);
+void setSpeed(SpeedSetting setting);
+// Available by default: SPEED_RAPID, SPEED_FAST, SPEED_SLOW
 
-// Hint: You can also modify the values directly, e.g.:
-myLed.fast_on_ms = 250;
+// Or use your own settings. SpeedSetting is a struct:
+typedef struct
+{
+    uint16_t on_ms;
+    uint16_t off_ms;
+    uint16_t pause_ms;
+    uint16_t ending_ms;
+} SpeedSetting;
 
-// shorthand for setting up the timing parameters by defining the fast ON duration in ms.
-// all other durations are derived from that with some internal factors.
-void setTiming(uint16_t on_ms);
+// ... alternatively you can setup the speed settings directly
+void setSpeed(
+    uint16_t on_ms,
+    uint16_t off_ms,
+    uint16_t pause_ms,
+    uint16_t ending_ms);
 
-// `true` if the indicator is currently blinking, showing a pattern or flashing
+// ... or by providing a single value, the other values are inferred from that
+void setSpeed(uint16_t on_ms);
+
+// Hint: You can also modify the values directly - even on the fly - e.g.:
+myLed.settings.on_ms = 250;
+myLed.settings.pause_ms = 2000;
+
+// `true` if the indicator is currently blinking, showing a pattern, flashing or pausing
 bool isOn();
 
 // You must call this in your loop!
@@ -121,10 +139,11 @@ int update();
 
 No problem! You have two options.
 
-- Use the generic `Indicator` class from `<Indicator.h>`. The `.update()`-method returns
-  a boolean whether the status is currently `HIGH` or `LOW`. You can then send this
-  value to your status indicator (see `examples/GenericBlink`). Use the `FadingIndictor`
-  class if you want fading effects. Here the `update` method returns an integer `0..255`.
+- Use the generic `BaseIndicator` class from `<BaseIndicator.h>`. The `.update()`-method
+  returns a boolean whether the status is currently `HIGH` or `LOW`. You can then send
+  this value to your status indicator (see `examples/GenericBlink`).
+  Use the `BaseFadeIndictor` class if you want fading effects. Here the `update` method
+  returns an integer `0..255`.
 
-- Subclass the `Indicator` class with custom logic. This is what `IndicatorPin` does
-  internally (see `src/IndicatorPin.h`).
+- Subclass the `BaseIndicator` class with custom logic. This is what `Indicator` does
+  internally (see `src/Indicator.h`). Have a look at the `SerialBlink` example!
