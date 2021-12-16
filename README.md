@@ -98,16 +98,16 @@ void toggle();
 // set ON / OFF permanently
 void permanent(bool enable);
 
-// blink infinitely. Speed is fast by default.
-void blink(SpeedSetting speed = SPEED_FAST);
+// blink infinitely
+void blink();
 
 // blink `num` times, then long pause
 // repeats, if `repeat` is set, OFF otherwise.
-void pattern(int num, bool repeat = true, SpeedSetting speed = SPEED_FAST);
+void pattern(int num, bool repeat = true);
 
 // blink `num1` times, short pause, blink `num2` times, long pause
 // repeats, if `repeat` is set, OFF otherwise.
-void pattern(int num1, int num2, bool repeat = true, SpeedSetting speed = SPEED_FAST);
+void pattern(int num1, int num2, bool repeat = true);
 
 // turn ON for the given duration in ms. Continues in the previous mode afterwards.
 void flash(uint16_t duration_ms);
@@ -117,15 +117,19 @@ void pause(uint16_t duration_ms);
 
 // setup the timing parameters
 void setSpeed(SpeedSetting setting);
-// Available by default: SPEED_RAPID, SPEED_FAST, SPEED_SLOW
 
-// Or use your own settings. SpeedSetting is a struct:
+// Available by default: SPEED_RAPID, SPEED_FAST, SPEED_SLOW
+myLed.setSpeed(SPEED_RAPID);
+myLed.setSpeed(SPEED_FAST);
+myLed.setSpeed(SPEED_SLOW);
+
+// .. or use your own settings. SpeedSetting is a struct:
 typedef struct
 {
-    uint16_t on_ms;
-    uint16_t off_ms;
-    uint16_t pause_ms;
-    uint16_t ending_ms;
+    uint16_t on_ms;         // ON time in milliseconds
+    uint16_t off_ms;        // OFF time in milliseconds
+    uint16_t pause_ms;      // pause between `num1` and `num2` in pattern()
+    uint16_t ending_ms;     // ending after a full pattern
 } SpeedSetting;
 
 // ... alternatively you can setup the speed settings directly
@@ -135,7 +139,8 @@ void setSpeed(
     uint16_t pause_ms,
     uint16_t ending_ms);
 
-// ... or by providing a single value, the other values are inferred from that
+// ... or by providing a single value, the other values are inferred from that by
+// some internal factors
 void setSpeed(uint16_t on_ms);
 
 // Hint: You can also modify the values directly - even on the fly - e.g.:

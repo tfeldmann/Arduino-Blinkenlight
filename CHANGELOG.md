@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.0 (2021-12-16)
+
+- Removed default speeds from methods
+
 ## v2.0.1 (2021-12-16)
 
 - Renamed library to `Blinkenlight`
