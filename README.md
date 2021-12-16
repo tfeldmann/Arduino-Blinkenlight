@@ -66,7 +66,7 @@ Easy, uh? It's not only blinking, it does so with smooth fading effects and
 logarithmic LED brightness compensation. Your boards never looked more professional! /s
 
 > Note: If you don't love the fading effects, just use the `Blinkenlight`-class instead
-> of `Fadinglight`. This sure does make your code more stylish.
+> of `Fadinglight`.
 
 ## Full API
 
