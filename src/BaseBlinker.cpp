@@ -59,10 +59,8 @@ void BaseBlinker::permanent(bool enable)
     update();
 }
 
-void BaseBlinker::blink(SpeedSetting speed)
+void BaseBlinker::blink()
 {
-    setSpeed(speed);
-
     // only switch mode if we are not blinking already
     if (mode_ != Mode::BLINKING)
     {
@@ -73,15 +71,13 @@ void BaseBlinker::blink(SpeedSetting speed)
     update();
 }
 
-void BaseBlinker::pattern(int num, bool repeat, SpeedSetting speed)
+void BaseBlinker::pattern(int num, bool repeat)
 {
-    setSpeed(speed);
-    pattern(num, 0, repeat, speed);
+    pattern(num, 0, repeat);
 }
 
-void BaseBlinker::pattern(int num1, int num2, bool repeat, SpeedSetting speed)
+void BaseBlinker::pattern(int num1, int num2, bool repeat)
 {
-    setSpeed(speed);
     repeat_ = repeat;
 
     if (mode_ != Mode::PATTERN || num1_ != num1 || num2_ != num2)

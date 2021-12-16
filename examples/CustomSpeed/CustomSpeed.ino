@@ -11,7 +11,8 @@ SpeedSetting mySettings = {
 void setup()
 {
     // blink 2x on repeat with custom settings
-    led.pattern(2, true, mySettings);
+    led.setSpeed(mySettings);
+    led.pattern(2, true);
 }
 
 void loop()

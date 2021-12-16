@@ -10,7 +10,8 @@ void setup()
     isFast = false;
     lastSwitch = millis();
 
-    led.blink(SPEED_SLOW);
+    led.setSpeed(SPEED_SLOW);
+    led.blink();
 }
 
 void loop()
@@ -22,6 +23,6 @@ void loop()
     {
         lastSwitch = millis();
         isFast = !isFast;
-        led.blink(isFast ? SPEED_FAST : SPEED_SLOW);
+        led.setSpeed(isFast ? SPEED_FAST : SPEED_SLOW);
     }
 }
