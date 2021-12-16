@@ -7,7 +7,7 @@
 > This library gives you non-blocking blinking patterns and smooth fade effects for your
 > LEDs, buzzers or any other status indicators
 
-<pre style="text-align:center">
+<pre align="center">
 <strong>Achtung Alles Lookenskeepers!</strong>
 Das computermachine ist nicht fuer gefingerpoken und
 mittengrabben. Ist easy schnappen der springenwerk,
