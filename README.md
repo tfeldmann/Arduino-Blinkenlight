@@ -83,7 +83,13 @@ Fadinglight myPin(13);
 myPin.permanent(LOW);
 myPin.blink();
 // ... and so on.
+
+// options available in the constructor:
+Blinkenlight(int pin, bool invert = false);
+Fadinglight(int pin, bool logarithmic = true, int fade_speed = 30);
 ```
+
+What you can do with your light:
 
 ```C
 // set permanently ON
