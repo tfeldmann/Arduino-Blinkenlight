@@ -3,9 +3,9 @@
  * port.
  */
 
-#include <BaseIndicator.h>
+#include <BaseBlinker.h>
 
-class SerialBlinker : public BaseIndicator
+class SerialBlinker : public BaseBlinker
 {
 public:
     void write(int state) override

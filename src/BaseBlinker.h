@@ -30,10 +30,10 @@ const SpeedSetting SPEED_SLOW = {
     .ending_ms = 3200,
 };
 
-class BaseIndicator
+class BaseBlinker
 {
 public:
-    BaseIndicator();
+    BaseBlinker();
 
     void setSpeed(uint16_t on_ms);
     void setSpeed(
@@ -43,7 +43,7 @@ public:
         uint16_t ending_ms);
     void setSpeed(SpeedSetting setting);
 
-    // `true` if the indicator is currently blinking, showing a pattern, flashing or pausing
+    // `true` if the Blinkenlight is currently blinking, showing a pattern, flashing or pausing
     bool isOn();
 
     // set permanently ON

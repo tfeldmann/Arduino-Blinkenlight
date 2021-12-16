@@ -1,6 +1,6 @@
-#include <Indicator.h>
+#include <Blinkenlight.h>
 
-Indicator led(13);
+Blinkenlight led(13);
 SpeedSetting mySettings = {
     .on_ms = 100,
     .off_ms = 100,

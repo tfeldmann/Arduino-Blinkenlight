@@ -5,10 +5,10 @@
 - **Revamped API!**
 - New: writes the state only on changes, not on every update
 - Renamed the classes and header files:
-  - `IndicatorPin` -> `Indicator`
-  - `FadingIndicatorPin` -> `FadeIndicator`
-  - `Indicator` -> `BaseIndicator`
-  - `FadingIndicator` -> `BaseFadeIndicator`
+  - `BlinkenlightPin` -> `Blinkenlight`
+  - `FadingBlinkenlightPin` -> `Fadinglight`
+  - `Blinkenlight` -> `BaseBlinker`
+  - `FadingBlinkenlight` -> `BaseFader`
 - Code cleanups
 - Uses GitHub Actions for tests
 

@@ -1,11 +1,27 @@
-# Arduino-Indicator
+# Arduino-Blinkenlight
 
-[![tests](https://github.com/tfeldmann/Arduino-Indicator/actions/workflows/tests.yml/badge.svg)](https://github.com/tfeldmann/Arduino-Indicator/actions/workflows/tests.yml)
+[![tests](https://github.com/tfeldmann/Arduino-Blinkenlight/actions/workflows/tests.yml/badge.svg)](https://github.com/tfeldmann/Arduino-Blinkenlight/actions/workflows/tests.yml)
 
 ## 🚨 Supercharge your status-LEDs 🚨
 
 > This library gives you non-blocking blinking patterns and smooth fade effects for your
 > LEDs, buzzers or any other status indicators
+
+<pre style="text-align:center">
+<strong>Achtung Alles Lookenskeepers!</strong>
+Das computermachine ist nicht fuer gefingerpoken und
+mittengrabben. Ist easy schnappen der springenwerk,
+blowenfusen und poppencorken mit spitzensparken. Ist nicht
+fuer gewerken bei das dumpkopfen. Das rubbernecken
+sichtseeren keepen das cotten-pickenen hans in das pockets
+muss; <i>relaxen und watchen das blinkenlichten.</i>
+</pre>
+
+## Why
+
+I created this library because I like to blink my error codes to the user. So for
+example blink two times for problems with component X, three times for component Y - you
+get the idea.
 
 ## Features
 
@@ -31,9 +47,9 @@ This example blinks the built-in LED on pin 13 in the following pattern:
 - Repeat
 
 ```C
-#include <FadeIndicator.h>
+#include <Fadinglight.h>
 
-FadeIndicator led(13);
+Fadinglight led(13);
 
 void setup()
 {
@@ -49,19 +65,19 @@ void loop()
 Easy, uh? It's not only blinking, it does so with smooth fading effects and
 logarithmic LED brightness compensation. Your boards never looked more professional! /s
 
-> Note: If you don't love the fading effects, just use the `Indicator`-class instead of
-> `FadeIndicator`.
+> Note: If you don't love the fading effects, just use the `Blinkenlight`-class instead of
+> `Fadinglight`.
 
 ## Full API
 
 ```C
 // Without fading effect:
-#include <Indicator.h>
-Indicator myPin(13);
+#include <Blinkenlight.h>
+Blinkenlight myPin(13);
 
 // With fading effect:
-#include <FadeIndicator.h>
-FadeIndicator myPin(13);
+#include <Fadinglight.h>
+Fadinglight myPin(13);
 
 // now in your code you can do:
 myPin.permanent(LOW);
@@ -126,24 +142,24 @@ void setSpeed(uint16_t on_ms);
 myLed.settings.on_ms = 250;
 myLed.settings.pause_ms = 2000;
 
-// `true` if the indicator is currently blinking, showing a pattern, flashing or pausing
+// `true` if the Blinkenlight is currently blinking, showing a pattern, flashing or pausing
 bool isOn();
 
 // You must call this in your loop!
-// Returns the current value of the indiciator (LOW / HIGH).
+// Returns the current value of the light (LOW / HIGH).
 // - You can ignore that if you want.
 int update();
 ```
 
-## My status indicator is controlled via CAN / I2C / SPI / ... What can I do?
+## I have a status indicator controlled via CAN / I2C / SPI / ... What can I do?
 
 No problem! You have two options.
 
-- Use the generic `BaseIndicator` class from `<BaseIndicator.h>`. The `.update()`-method
+- Use the generic `BaseBlinker` class from `<BaseBlinker.h>`. The `.update()`-method
   returns a boolean whether the status is currently `HIGH` or `LOW`. You can then send
-  this value to your status indicator (see `examples/GenericBlink`).
-  Use the `BaseFadeIndictor` class if you want fading effects. Here the `update` method
+  this value to your status Blinkenlight (see `examples/GenericBlink`).
+  Use the `BaseFader` class if you want fading effects. Here the `update` method
   returns an integer `0..255`.
 
-- Subclass the `BaseIndicator` class with custom logic. This is what `Indicator` does
-  internally (see `src/Indicator.h`). Have a look at the `SerialBlink` example!
+- Subclass the `BaseBlinker` class with custom logic. This is what `Blinkenlight` does
+  internally (see `src/Blinkenlight.h`). Have a look at the `SerialBlink` example!

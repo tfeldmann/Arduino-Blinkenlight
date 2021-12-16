@@ -1,6 +1,6 @@
-#include <FadeIndicator.h>
+#include <Fadinglight.h>
 
-FadeIndicator led(13);
+Fadinglight led(13);
 
 uint32_t lastSwitch;
 bool isFast;

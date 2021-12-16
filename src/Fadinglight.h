@@ -1,13 +1,13 @@
 #pragma once
 #include <Arduino.h>
 
-#include "BaseFadeIndicator.h"
+#include "BaseFader.h"
 
-class FadeIndicator : public BaseFadeIndicator
+class Fadinglight : public BaseFader
 {
 public:
-    FadeIndicator(int pin, bool logarithmic = true, int fade_speed = 30)
-        : BaseFadeIndicator(logarithmic, fade_speed), pin_(pin)
+    Fadinglight(int pin, bool logarithmic = true, int fade_speed = 30)
+        : BaseFader(logarithmic, fade_speed), pin_(pin)
     {
         pinMode(pin_, OUTPUT);
         analogWrite(pin_, 0);
