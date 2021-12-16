@@ -1,6 +1,6 @@
 {
     "name": "Blinkenlight",
-    "version": "2.0.1",
+    "version": "2.1.0",
     "description": "This library gives you non-blocking blinking patterns and smooth fade effects for your LEDs, buzzers or any other status indicators",
     "keywords": "led, signal, fading, blink",
     "repository": {
