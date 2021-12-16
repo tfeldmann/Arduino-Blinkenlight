@@ -35,15 +35,7 @@ class BaseBlinker
 public:
     BaseBlinker();
 
-    void setSpeed(uint16_t on_ms);
-    void setSpeed(
-        uint16_t on_ms,
-        uint16_t off_ms,
-        uint16_t pause_ms,
-        uint16_t ending_ms);
-    void setSpeed(SpeedSetting setting);
-
-    // `true` if the Blinkenlight is currently blinking, showing a pattern, flashing or pausing
+    // `true` if it is currently blinking, showing a pattern, flashing or pausing
     bool isOn();
 
     // set permanently ON
@@ -59,23 +51,30 @@ public:
     void permanent(bool enable);
 
     // blink infinitely
-    void blink(SpeedSetting speed = SPEED_FAST);
+    void blink();
 
     // blink `num` times, then long pause
     // repeats if `repeat` is set, otherwise it is OFF afterwards
-    void pattern(int num,
-                 bool repeat = true, SpeedSetting speed = SPEED_FAST);
+    void pattern(int num, bool repeat = true);
 
     // blink `num1` times, short pause, blink `num2` times, long pause
     // repeats if `repeat` is set, otherwise it is OFF afterwards
-    void pattern(int num1, int num2,
-                 bool repeat = true, SpeedSetting speed = SPEED_FAST);
+    void pattern(int num1, int num2, bool repeat = true);
 
     // turn ON for the given duration in ms. Continues in the previous mode afterwards.
     void flash(uint16_t duration_ms);
 
     // turn OFF for the given duration in ms. Continues in the previous mode afterwards.
     void pause(uint16_t duration_ms);
+
+    // different methods to set the speed settings
+    void setSpeed(uint16_t on_ms);
+    void setSpeed(
+        uint16_t on_ms,
+        uint16_t off_ms,
+        uint16_t pause_ms,
+        uint16_t ending_ms);
+    void setSpeed(SpeedSetting setting);
 
     // You must call this in your loop!
     // Returns the current value of the indiciator (LOW / HIGH)
