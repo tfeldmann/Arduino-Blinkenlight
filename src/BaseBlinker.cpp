@@ -1,13 +1,13 @@
-#include "BaseIndicator.h"
+#include "BaseBlinker.h"
 
-BaseIndicator::BaseIndicator()
+BaseBlinker::BaseBlinker()
     : prevState_(LOW)
 {
     permanent(LOW);
     write(LOW);
 }
 
-void BaseIndicator::setSpeed(uint16_t on_ms)
+void BaseBlinker::setSpeed(uint16_t on_ms)
 {
     setting.on_ms = on_ms;
     setting.off_ms = on_ms;
@@ -15,7 +15,7 @@ void BaseIndicator::setSpeed(uint16_t on_ms)
     setting.ending_ms = on_ms * 4;
 }
 
-void BaseIndicator::setSpeed(
+void BaseBlinker::setSpeed(
     uint16_t on_ms,
     uint16_t off_ms,
     uint16_t pause_ms,
@@ -27,39 +27,39 @@ void BaseIndicator::setSpeed(
     setting.ending_ms = ending_ms;
 }
 
-void BaseIndicator::setSpeed(SpeedSetting setting)
+void BaseBlinker::setSpeed(SpeedSetting setting)
 {
     this->setting = setting;
 }
 
-bool BaseIndicator::isOn()
+bool BaseBlinker::isOn()
 {
     return isFlashing() || mode_ != Mode::OFF;
 }
 
-void BaseIndicator::on()
+void BaseBlinker::on()
 {
     permanent(HIGH);
 }
 
-void BaseIndicator::off()
+void BaseBlinker::off()
 {
     permanent(LOW);
 }
 
-void BaseIndicator::toggle()
+void BaseBlinker::toggle()
 {
     permanent(!isOn());
 }
 
-void BaseIndicator::permanent(bool enable)
+void BaseBlinker::permanent(bool enable)
 {
     mode_ = enable ? Mode::ON : Mode::OFF;
     set(enable);
     update();
 }
 
-void BaseIndicator::blink(SpeedSetting speed)
+void BaseBlinker::blink(SpeedSetting speed)
 {
     setSpeed(speed);
 
@@ -73,13 +73,13 @@ void BaseIndicator::blink(SpeedSetting speed)
     update();
 }
 
-void BaseIndicator::pattern(int num, bool repeat, SpeedSetting speed)
+void BaseBlinker::pattern(int num, bool repeat, SpeedSetting speed)
 {
     setSpeed(speed);
     pattern(num, 0, repeat, speed);
 }
 
-void BaseIndicator::pattern(int num1, int num2, bool repeat, SpeedSetting speed)
+void BaseBlinker::pattern(int num1, int num2, bool repeat, SpeedSetting speed)
 {
     setSpeed(speed);
     repeat_ = repeat;
@@ -97,7 +97,7 @@ void BaseIndicator::pattern(int num1, int num2, bool repeat, SpeedSetting speed)
     update();
 }
 
-void BaseIndicator::flash(uint16_t duration_ms)
+void BaseBlinker::flash(uint16_t duration_ms)
 {
     flashStart_ = millis();
     flashDuration_ = duration_ms;
@@ -105,7 +105,7 @@ void BaseIndicator::flash(uint16_t duration_ms)
     update();
 }
 
-void BaseIndicator::pause(uint16_t duration_ms)
+void BaseBlinker::pause(uint16_t duration_ms)
 {
     flashStart_ = millis();
     flashDuration_ = duration_ms;
@@ -113,7 +113,7 @@ void BaseIndicator::pause(uint16_t duration_ms)
     update();
 }
 
-int BaseIndicator::update()
+int BaseBlinker::update()
 {
     // flash overlay - returns to previous mode when finished
     if (isFlashing())
@@ -196,12 +196,12 @@ int BaseIndicator::update()
     return state_;
 }
 
-void BaseIndicator::write(int state)
+void BaseBlinker::write(int state)
 {
     // do nothing. can be overwritten.
 }
 
-void BaseIndicator::set(int state)
+void BaseBlinker::set(int state)
 {
     state_ = state;
     // only write changes
@@ -212,7 +212,7 @@ void BaseIndicator::set(int state)
     }
 }
 
-bool BaseIndicator::isFlashing()
+bool BaseBlinker::isFlashing()
 {
     return !((millis() - flashStart_) > flashDuration_);
 }

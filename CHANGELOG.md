@@ -1,14 +1,18 @@
 # Changelog
 
+## v2.0.1 (2021-12-16)
+
+- Renamed library to `Blinkenlight`
+
 ## v2.0.0 (2021-12-16)
 
 - **Revamped API!**
 - New: writes the state only on changes, not on every update
 - Renamed the classes and header files:
-  - `IndicatorPin` -> `Indicator`
-  - `FadingIndicatorPin` -> `FadeIndicator`
-  - `Indicator` -> `BaseIndicator`
-  - `FadingIndicator` -> `BaseFadeIndicator`
+  - `BlinkenlightPin` -> `Blinkenlight`
+  - `FadingBlinkenlightPin` -> `Fadinglight`
+  - `Blinkenlight` -> `BaseBlinker`
+  - `FadingBlinkenlight` -> `BaseFader`
 - Code cleanups
 - Uses GitHub Actions for tests
 

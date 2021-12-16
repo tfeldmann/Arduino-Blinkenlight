@@ -1,6 +1,6 @@
-#include <Indicator.h>
+#include <Blinkenlight.h>
 
-Indicator led(13);
+Blinkenlight led(13);
 
 void setup()
 {

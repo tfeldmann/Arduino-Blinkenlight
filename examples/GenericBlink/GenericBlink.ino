@@ -1,22 +1,22 @@
 /*
-This example shows how to use a generic indicator.
+This example shows how to use a generic Blinkenlight.
 The `update()` method returns HIGH or LOW that you can use however you want.
 
-Of course this example would be easer with a `Indicator` which handles the
+Of course this example would be easer with a `Blinkenlight` which handles the
 digital output automatically.
 */
-#include <BaseIndicator.h>
+#include <BaseBlinker.h>
 
-BaseIndicator myIndicator;
+BaseBlinker myBlinkenlight;
 
 void setup()
 {
     pinMode(13, OUTPUT);
-    myIndicator.blink();
+    myBlinkenlight.blink();
 }
 
 void loop()
 {
-    bool isOn = myIndicator.update();
+    bool isOn = myBlinkenlight.update();
     digitalWrite(13, isOn);
 }

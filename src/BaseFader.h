@@ -1,7 +1,7 @@
 #pragma once
 #include <Arduino.h>
 
-#include "BaseIndicator.h"
+#include "BaseBlinker.h"
 
 // logarithmic led brightness curve
 // clang-format off
@@ -25,11 +25,11 @@ static const uint8_t LED_LOG_CURVE[256] = {
 };
 // clang-format on
 
-class BaseFadeIndicator : public BaseIndicator
+class BaseFader : public BaseBlinker
 {
 public:
-    BaseFadeIndicator(bool logarithmic = false, int fadeSpeed = 30)
-        : BaseIndicator(),
+    BaseFader(bool logarithmic = false, int fadeSpeed = 30)
+        : BaseBlinker(),
           output_(0),
           fadeSpeed_(abs(fadeSpeed)),
           logarithmic_(logarithmic),
@@ -39,7 +39,7 @@ public:
 
     int update()
     {
-        int state = BaseIndicator::update();
+        int state = BaseBlinker::update();
         uint32_t time = millis();
         if (time - lastUpdate_ > 10)
         {
@@ -63,12 +63,12 @@ public:
     virtual void write(int state)
     {
         // write() is only called on changes.
-        // You can override it and set your indicator here.
+        // You can override it and set your Blinkenlight here.
     }
 
     void set(int state) override
     {
-        // we have to override this method here to prohibit the `BaseIndicator` from
+        // we have to override this method here to prohibit the `BaseBlinker` from
         // calling `write`. Otherwise we write unwanted 0 and 1 instead of fading.
         state_ = state;
     }

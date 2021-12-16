@@ -1,13 +1,13 @@
 #pragma once
 #include <Arduino.h>
 
-#include "BaseIndicator.h"
+#include "BaseBlinker.h"
 
-class Indicator : public BaseIndicator
+class Blinkenlight : public BaseBlinker
 {
 public:
-    Indicator(int pin, bool invert = false)
-        : BaseIndicator(), pin_(pin), invert_(invert)
+    Blinkenlight(int pin, bool invert = false)
+        : BaseBlinker(), pin_(pin), invert_(invert)
     {
         pinMode(pin_, OUTPUT);
     }

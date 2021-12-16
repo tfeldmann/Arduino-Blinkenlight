@@ -1,9 +1,9 @@
 /*
 Start a blinking pattern on the built-in LED with a smooth fading effect.
 */
-#include <FadeIndicator.h>
+#include <Fadinglight.h>
 
-FadeIndicator led(13);
+Fadinglight led(13);
 
 void setup()
 {
