@@ -15,7 +15,6 @@ public:
     void write(int state) override
     {
         digitalWrite(pin_, state ^ invert_);
-        Serial.println(state);
     }
 
 private:

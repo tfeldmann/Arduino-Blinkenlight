@@ -6,7 +6,7 @@
 class FadeIndicator : public BaseFadeIndicator
 {
 public:
-    FadeIndicator(int pin, bool logarithmic = true, int fade_speed = 20)
+    FadeIndicator(int pin, bool logarithmic = true, int fade_speed = 30)
         : BaseFadeIndicator(logarithmic, fade_speed), pin_(pin)
     {
         pinMode(pin_, OUTPUT);
