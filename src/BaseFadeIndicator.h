@@ -1,7 +1,7 @@
 #pragma once
 #include <Arduino.h>
 
-#include "Indicator.h"
+#include "BaseIndicator.h"
 
 // logarithmic led brightness curve
 // clang-format off
@@ -25,38 +25,57 @@ static const uint8_t LED_LOG_CURVE[256] = {
 };
 // clang-format on
 
-class FadingIndicator : public Indicator
+class BaseFadeIndicator : public BaseIndicator
 {
 public:
-    FadingIndicator(bool logarithmic = false, int fade_speed = 30)
+    BaseFadeIndicator(bool logarithmic = false, int fadeSpeed = 30)
+        : BaseIndicator(),
+          output_(0),
+          fadeSpeed_(abs(fadeSpeed)),
+          logarithmic_(logarithmic),
+          lastUpdate_(millis())
     {
-        Indicator();
-        setTiming(300, 300, 750, 1200, 1000, 1000, 2000, 4000);
-        logarithmic_ = logarithmic;
-        fade_speed_ = abs(fade_speed);
-        lastUpdate_ = millis();
-        value_ = 0;
     }
 
     int update()
     {
-        int state = Indicator::update();
+        int state = BaseIndicator::update();
         uint32_t time = millis();
         if (time - lastUpdate_ > 10)
         {
             lastUpdate_ = time;
-            int diff = state * 255 - value_;
-            value_ += constrain(diff, -fade_speed_, fade_speed_);
+            int diff = state * 255 - output_;
+            output_ += constrain(diff, -fadeSpeed_, fadeSpeed_);
+
+            // only write changes
+            if (diff)
+            {
+                int result = logarithmic_ ? LED_LOG_CURVE[output_] : output_;
+                write(result);
+                return result;
+            }
         }
         if (logarithmic_)
-            return LED_LOG_CURVE[value_];
-        return value_;
+            return LED_LOG_CURVE[output_];
+        return output_;
+    }
+
+    virtual void write(int state)
+    {
+        // write() is only called on changes.
+        // You can override it and set your indicator here.
+    }
+
+    void set(int state) override
+    {
+        // we have to override this method here to prohibit the `BaseIndicator` from
+        // calling `write`. Otherwise we write unwanted 0 and 1 instead of fading.
+        state_ = state;
     }
 
 private:
-    int pin_;
-    int value_;
-    int fade_speed_;
+    int output_;
+    uint8_t fadeSpeed_;
     bool logarithmic_;
-    unsigned long long lastUpdate_;
+    uint32_t lastUpdate_;
 };

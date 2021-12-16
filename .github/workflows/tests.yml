@@ -29,6 +29,8 @@ jobs:
             "examples/Pattern",
             "examples/Pattern2",
             "examples/FadingBlink",
+            "examples/CustomSpeed",
+            "examples/SpeedAdjustment",
           ]
 
     # Steps represent a sequence of tasks that will be executed as part of the job

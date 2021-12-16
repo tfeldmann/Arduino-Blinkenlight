@@ -2,11 +2,10 @@
 Start a blinking pattern on the built-in LED with a smooth fading effect.
 */
 
-#include <FadingIndicatorPin.h>
+#include <FadeIndicator.h>
 
-// Use `FadingIndicatorPin` for a smooth fade.
-// If you want hard blinking, use `IndicatorPin`.
-FadingIndicatorPin led(13);
+// We use `FadeIndicator` for a smooth fade.
+FadeIndicator led(13);
 
 void setup()
 {
