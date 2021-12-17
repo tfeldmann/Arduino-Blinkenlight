@@ -17,12 +17,6 @@ sichtseeren keepen das cotten-pickenen hans in das pockets
 muss; <i>relaxen und watchen das blinkenlichten.</i>
 </pre>
 
-## Why
-
-I created this library because I like to blink my error codes to the user. So for
-example blink two times for problems with component X, three times for component Y - you
-get the idea.
-
 ## Features
 
 - Basics: On / off / toggle
@@ -199,3 +193,9 @@ No problem! You have two options.
 
 - Subclass the `BaseBlinker` class with custom logic. This is what `Blinkenlight` does
   internally (see `src/Blinkenlight.h`). Have a look at the `SerialBlink` example!
+
+## Why
+
+I created this library because I like to blink my error codes to the user. So for
+example blink two times for problems with component X, three times for component Y - you
+get the idea.
