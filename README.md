@@ -19,10 +19,14 @@ muss; <i>relaxen und watchen das blinkenlichten.</i>
 
 ## Features
 
-- Basics: On / off / toggle
-- Supports blink patterns in the style of "Blink x times, pause, blink y times, repeat"
-- Supports infinite blinking
-- Supports single flashes and pauses, resuming the previous mode
+- On / off / toggle
+- Infinite blinking
+- Blink patterns in the style of "Blink x times, pause, blink y times, repeat"
+- Single flashes and pauses, resuming the previous mode
+
+Other goodies:
+
+- Supports active low (inverted) logic
 - Completely non-blocking (no `delay()`)
 - Parameters for pause- / off- / on-time duration can be adjusted on the fly
 - Super-nice fading effects (optional) with logarithmic brightness compensation for LEDs
