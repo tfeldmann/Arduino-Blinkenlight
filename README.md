@@ -40,6 +40,8 @@ get the idea.
 
 This example blinks the built-in LED on pin 13 in the following pattern:
 
+![pattern](docs/SpeedSettings.png)
+
 - Blink 2x
 - Short pause
 - Blink 3x
@@ -68,11 +70,17 @@ logarithmic LED brightness compensation. Your boards never looked more professio
 > Note: If you don't love the fading effects, just use the `Blinkenlight`-class instead
 > of `Fadinglight`.
 
-Example output of `pattern(2, 3)`:
+## Installation
 
-![pattern](docs/SpeedSettings.png)
+`Blinkenlight` is available in the Arduino library manager and on [`platform.io`](https://platformio.org/lib/show/13287/Blinkenlight):
+
+```
+pio lib install "tfeldmann/Blinkenlight"
+```
 
 ## Full API
+
+### Instantiation
 
 ```C
 // Without fading effect:
@@ -86,14 +94,14 @@ Fadinglight myPin(13);
 // now in your code you can do:
 myPin.permanent(LOW);
 myPin.blink();
-// ... and so on.
+// ... and so on (see below)
 
 // options available in the constructor:
 Blinkenlight(int pin, bool invert = false);
 Fadinglight(int pin, bool logarithmic = true, int fade_speed = 30);
 ```
 
-What you can do with your light:
+### Basic usage (what you can do with your light)
 
 ```C
 // set permanently ON
@@ -125,6 +133,18 @@ void flash(uint16_t duration_ms);
 // turn OFF for the given duration in ms. Continues in the previous mode afterwards.
 void pause(uint16_t duration_ms);
 
+// `true` if the Blinkenlight is currently blinking, showing a pattern, flashing or pausing
+bool isOn();
+
+// You must call this in your loop!
+// Returns the current value of the light (LOW / HIGH).
+// - You can ignore that if you want.
+int update();
+```
+
+### Blinking speed and timing parameters
+
+```C
 // setup the timing parameters
 void setSpeed(SpeedSetting setting);
 
@@ -142,7 +162,16 @@ typedef struct
     uint16_t ending_ms;     // ending after a full pattern
 } SpeedSetting;
 
-// ... alternatively you can setup the speed settings directly
+// so you can set it up like this:
+
+SpeedSetting mySettings = {
+    .on_ms = 100,
+    .off_ms = 100,
+    .pause_ms = 2000,
+    .ending_ms = 2000,
+};
+
+// ... alternatively you can setup the speed settings directly with this method
 void setSpeed(
     uint16_t on_ms,
     uint16_t off_ms,
@@ -156,14 +185,6 @@ void setSpeed(uint16_t on_ms);
 // Hint: You can also modify the values directly - even on the fly - e.g.:
 myLed.settings.on_ms = 250;
 myLed.settings.pause_ms = 2000;
-
-// `true` if the Blinkenlight is currently blinking, showing a pattern, flashing or pausing
-bool isOn();
-
-// You must call this in your loop!
-// Returns the current value of the light (LOW / HIGH).
-// - You can ignore that if you want.
-int update();
 ```
 
 ## I have a status indicator controlled via CAN / I2C / SPI / ... What can I do?
