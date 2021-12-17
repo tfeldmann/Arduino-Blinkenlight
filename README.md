@@ -68,6 +68,10 @@ logarithmic LED brightness compensation. Your boards never looked more professio
 > Note: If you don't love the fading effects, just use the `Blinkenlight`-class instead
 > of `Fadinglight`.
 
+Example output of `pattern(2, 3)`:
+
+![pattern](docs/SpeedSettings.png)
+
 ## Full API
 
 ```C

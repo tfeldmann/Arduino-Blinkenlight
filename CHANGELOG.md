@@ -1,5 +1,10 @@
 # Changelog
 
+## In progress
+
+- `logarithmic` is now `true` by default
+- Added example `FadeComparison`
+
 ## v2.2.0 (2021-12-17)
 
 - Fixes a bug where no default speed is set
