@@ -40,24 +40,23 @@ public:
     int update()
     {
         int state = BaseBlinker::update();
-        uint32_t time = millis();
-        if (time - lastUpdate_ > 10)
-        {
-            lastUpdate_ = time;
-            int diff = state * 255 - output_;
-            output_ += constrain(diff, -fadeSpeed_, fadeSpeed_);
+        uint32_t ms = millis();
 
-            // only write changes
+        if (ms - lastUpdate_ > 10)
+        {
+            lastUpdate_ = ms;
+            int diff = state * 255 - output_;
+
+            // we only call `write` on changes
             if (diff)
             {
+                output_ += constrain(diff, -fadeSpeed_, fadeSpeed_);
                 int result = logarithmic_ ? LED_LOG_CURVE[output_] : output_;
                 write(result);
                 return result;
             }
         }
-        if (logarithmic_)
-            return LED_LOG_CURVE[output_];
-        return output_;
+        return logarithmic_ ? LED_LOG_CURVE[output_] : output_;
     }
 
     virtual void write(int state)
