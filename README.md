@@ -36,12 +36,6 @@ This example blinks the built-in LED on pin 13 in the following pattern:
 
 ![pattern](docs/SpeedSettings.png)
 
-- Blink 2x
-- Short pause
-- Blink 3x
-- Long pause
-- Repeat
-
 ```C
 #include <Fadinglight.h>
 
