@@ -2,6 +2,7 @@
 
 ## WIP
 
+- `BaseFader` now supports custom value ranges (default = 255)
 - Small code speedup in `BaseFader`
 
 ## v2.1.0 (2021-12-16)
