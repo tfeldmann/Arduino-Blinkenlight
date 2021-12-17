@@ -28,36 +28,36 @@ static const uint8_t LED_LOG_CURVE[256] = {
 class BaseFader : public BaseBlinker
 {
 public:
-    BaseFader(bool logarithmic = false, int fadeSpeed = 30)
+    BaseFader(bool logarithmic = false, int fadeSpeed = 30, int range = 255)
         : BaseBlinker(),
           output_(0),
-          fadeSpeed_(abs(fadeSpeed)),
+          lastUpdate_(millis()),
           logarithmic_(logarithmic),
-          lastUpdate_(millis())
+          fadeSpeed_(abs(fadeSpeed)),
+          range_(range)
     {
     }
 
     int update()
     {
         int state = BaseBlinker::update();
-        uint32_t time = millis();
-        if (time - lastUpdate_ > 10)
-        {
-            lastUpdate_ = time;
-            int diff = state * 255 - output_;
-            output_ += constrain(diff, -fadeSpeed_, fadeSpeed_);
+        uint32_t ms = millis();
 
-            // only write changes
+        if (ms - lastUpdate_ > 10)
+        {
+            lastUpdate_ = ms;
+            int diff = state * range_ - output_;
+
+            // we only call `write` on changes
             if (diff)
             {
+                output_ += constrain(diff, -fadeSpeed_, fadeSpeed_);
                 int result = logarithmic_ ? LED_LOG_CURVE[output_] : output_;
                 write(result);
                 return result;
             }
         }
-        if (logarithmic_)
-            return LED_LOG_CURVE[output_];
-        return output_;
+        return logarithmic_ ? LED_LOG_CURVE[output_] : output_;
     }
 
     virtual void write(int state)
@@ -75,7 +75,9 @@ public:
 
 private:
     int output_;
-    uint8_t fadeSpeed_;
-    bool logarithmic_;
     uint32_t lastUpdate_;
+
+    bool logarithmic_;
+    int fadeSpeed_;
+    int range_;
 };

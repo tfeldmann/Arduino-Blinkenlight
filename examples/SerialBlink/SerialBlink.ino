@@ -10,7 +10,6 @@ class SerialBlinker : public BaseBlinker
 public:
     void write(int state) override
     {
-        Serial.print("LED: ");
         Serial.println(state);
     }
 };
@@ -19,6 +18,7 @@ SerialBlinker myBlinker;
 
 void setup()
 {
+    Serial.begin(9600);
     myBlinker.pattern(2, 4);
 }
 

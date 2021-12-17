@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.2.0 (2021-12-17)
+
+- Fixes a bug where no default speed is set
+- Fixes a bug in the SerialBlink example where `Serial.begin()` is not called
+- `BaseFader` now supports custom value ranges (default = 255)
+- Small code speedup in `BaseFader`
+
 ## v2.1.0 (2021-12-16)
 
 - Removed default speeds from methods

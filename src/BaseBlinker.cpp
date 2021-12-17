@@ -5,6 +5,7 @@ BaseBlinker::BaseBlinker()
 {
     permanent(LOW);
     write(LOW);
+    setSpeed(SPEED_FAST);
 }
 
 void BaseBlinker::setSpeed(uint16_t on_ms)
