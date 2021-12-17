@@ -28,7 +28,7 @@ static const uint8_t LED_LOG_CURVE[256] = {
 class BaseFader : public BaseBlinker
 {
 public:
-    BaseFader(bool logarithmic = false, int fadeSpeed = 30, int range = 255)
+    BaseFader(bool logarithmic = true, int fadeSpeed = 30, int range = 255)
         : BaseBlinker(),
           output_(0),
           lastUpdate_(millis()),
