@@ -72,8 +72,20 @@ void BaseBlinker::blink()
     update();
 }
 
+void BaseBlinker::blink(SpeedSetting speed)
+{
+    setSpeed(speed);
+    blink();
+}
+
 void BaseBlinker::pattern(int num, bool repeat)
 {
+    pattern(num, 0, repeat);
+}
+
+void BaseBlinker::pattern(int num, SpeedSetting speed, bool repeat)
+{
+    setSpeed(speed);
     pattern(num, 0, repeat);
 }
 
@@ -92,6 +104,12 @@ void BaseBlinker::pattern(int num1, int num2, bool repeat)
         set(HIGH);
     }
     update();
+}
+
+void BaseBlinker::pattern(int num1, int num2, SpeedSetting speed, bool repeat)
+{
+    setSpeed(speed);
+    pattern(num1, num2, repeat);
 }
 
 void BaseBlinker::flash(uint16_t duration_ms)

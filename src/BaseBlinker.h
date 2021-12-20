@@ -53,13 +53,22 @@ public:
     // blink infinitely
     void blink();
 
+    // blink infinitely with new speed setting
+    void blink(SpeedSetting speed);
+
     // blink `num` times, then long pause
     // repeats if `repeat` is set, otherwise it is OFF afterwards
     void pattern(int num, bool repeat = true);
 
+    // same as before, but accepts a speed setting
+    void pattern(int num, SpeedSetting speed, bool repeat = true);
+
     // blink `num1` times, short pause, blink `num2` times, long pause
     // repeats if `repeat` is set, otherwise it is OFF afterwards
     void pattern(int num1, int num2, bool repeat = true);
+
+    // same as before, but accepts a speed setting
+    void pattern(int num1, int num2, SpeedSetting speed, bool repeat = true);
 
     // turn ON for the given duration in ms. Continues in the previous mode afterwards.
     void flash(uint16_t duration_ms);
