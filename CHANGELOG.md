@@ -1,6 +1,6 @@
 # Changelog
 
-## In progress
+## v2.3.0 (2021-12-20)
 
 - `logarithmic` is now `true` by default
 - Add `pattern` and `flash` method with `SpeedSetting` parameter
