@@ -69,11 +69,17 @@ logarithmic LED brightness compensation. Your boards never looked more professio
 
 ## Installation
 
-`Blinkenlight` is available in the Arduino library manager and on [`platform.io`](https://platformio.org/lib/show/13287/Blinkenlight):
+### Platform.io
+
+[Blinkenlight in the platform.io registry](https://platformio.org/lib/show/13287/Blinkenlight)
 
 ```
 pio lib install "tfeldmann/Blinkenlight"
 ```
+
+### Arduino library manager
+
+Available soon.
 
 ## Full API
 
@@ -82,20 +88,17 @@ pio lib install "tfeldmann/Blinkenlight"
 ```C
 // Without fading effect:
 #include <Blinkenlight.h>
-Blinkenlight myLed(13);
+Blinkenlight myLed(13);  // Blinkenlight(int pin, bool invert = false);
 
 // With fading effect:
 #include <Fadinglight.h>
-Fadinglight myLed(13);
+Fadinglight myLed(13);  // Fadinglight(int pin, bool logarithmic = true, int fade_speed = 30);
 
 // now in your code you can do:
 myLed.off();
 myLed.blink();
+myLed.pattern(3, 5, SPEED_FAST);
 // ... and so on (see below)
-
-// options available in the constructor:
-Blinkenlight(int pin, bool invert = false);
-Fadinglight(int pin, bool logarithmic = true, int fade_speed = 30);
 ```
 
 ### Basic usage (what you can do with your light)
