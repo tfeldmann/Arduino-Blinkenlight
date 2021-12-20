@@ -12,7 +12,7 @@ void setup()
     // 4. longer pause
     //
     // (repeat)
-    led.pattern(2, 3);
+    led.pattern(2, 3, SPEED_RAPID);
 }
 
 void loop()
