@@ -21,18 +21,21 @@ muss; <i>relaxen und watchen das blinkenlichten.</i>
 
 - On / off / toggle
 - Infinite blinking
-- Blink patterns in the style of "Blink x times, pause, blink y times, repeat"
+- Blink patterns (for example to blink an error code)
 - Single flashes and pauses, resuming the previous mode
 
 Other goodies:
 
-- Supports active low (inverted) logic
 - Completely non-blocking (no `delay()`)
-- Parameters for pause- / off- / on-time duration can be adjusted on the fly
 - Super-nice fading effects (optional) with logarithmic brightness compensation for LEDs
 - Lightweight
+- All parameters can be adjusted on the fly without visual hickups
 - Easily extendable to control components via SPI / CAN / I2C / UART ...
 - Comes with good-looking defaults (at least I tried)
+- Tries to be user friendly (for example calling `blink()` while blinking does not
+  restart the cycle)
+- Supports active low (inverted) logic
+- Can be used for buzzers as well
 
 ## Example
 
@@ -77,15 +80,15 @@ pio lib install "tfeldmann/Blinkenlight"
 ```C
 // Without fading effect:
 #include <Blinkenlight.h>
-Blinkenlight myPin(13);
+Blinkenlight myLed(13);
 
 // With fading effect:
 #include <Fadinglight.h>
-Fadinglight myPin(13);
+Fadinglight myLed(13);
 
 // now in your code you can do:
-myPin.permanent(LOW);
-myPin.blink();
+myLed.off();
+myLed.blink();
 // ... and so on (see below)
 
 // options available in the constructor:
@@ -178,6 +181,13 @@ void setSpeed(uint16_t on_ms);
 myLed.settings.on_ms = 250;
 myLed.settings.pause_ms = 2000;
 ```
+
+## Fading effect and brightness compensation
+
+LED brightness is not linear to the PWM value you set to the pin.
+This library uses a logarithmic dimming curve to create natural looking fading effects.
+
+![logarithmic fading](docs/logarithmic.png)
 
 ## I have a status indicator controlled via CAN / I2C / SPI / ... What can I do?
 
