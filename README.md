@@ -2,6 +2,8 @@
 
 [![tests](https://github.com/tfeldmann/Arduino-Blinkenlight/actions/workflows/tests.yml/badge.svg)](https://github.com/tfeldmann/Arduino-Blinkenlight/actions/workflows/tests.yml)
 
+Featured on [hackster.io](https://www.hackster.io/news/thomas-feldmann-s-arduino-blinkenlight-brings-you-smooth-non-blocking-status-led-flashing-and-fading-1d533e3cd20c)!
+
 ## 🚨 Supercharge your status-LEDs 🚨
 
 > This library gives you non-blocking blinking patterns and smooth fade effects for your
