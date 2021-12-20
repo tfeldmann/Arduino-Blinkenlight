@@ -204,6 +204,8 @@ No problem! You have two options.
 
 ## Why
 
-I created this library because I like to blink my error codes to the user. So for
-example blink two times for problems with component X, three times for component Y - you
-get the idea.
+I created this library because I like to blink my error codes to the user.
+So for example blink two times, then three times for error 23 - you get the idea.
+
+Over the time I found it super useful to handle basically all buzzers, lights and LEDs.
+I have multiple applications where it controls status lights via CAN.
