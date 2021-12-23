@@ -71,7 +71,7 @@ logarithmic LED brightness compensation. Your boards never looked more professio
 
 ### Platform.io
 
-[Blinkenlight in the platform.io registry](https://platformio.org/lib/show/13287/Blinkenlight)
+Blinkenlight is available [in the platform.io registry](https://platformio.org/lib/show/13287/Blinkenlight)
 
 ```
 pio lib install "tfeldmann/Blinkenlight"
@@ -79,7 +79,9 @@ pio lib install "tfeldmann/Blinkenlight"
 
 ### Arduino library manager
 
-Available soon.
+`Blinkenlight` is available in the Arduino library manager.
+
+![Blinkenlight in the Arduino library manager](docs/arduino-library.png)
 
 ## Full API
 
@@ -118,6 +120,9 @@ void permanent(bool enable);
 
 // blink infinitely
 void blink();
+
+// blink infinitely with given speed setting
+void blink(SpeedSetting speed);
 
 // blink `num` times, then long pause
 // repeats, if `repeat` is set, OFF otherwise.
