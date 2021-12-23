@@ -214,6 +214,7 @@ int BaseBlinker::update()
 void BaseBlinker::write(int state)
 {
     // do nothing. can be overwritten.
+    (void)state;
 }
 
 void BaseBlinker::set(int state)

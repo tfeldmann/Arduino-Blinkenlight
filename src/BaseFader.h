@@ -64,6 +64,7 @@ public:
     {
         // write() is only called on changes.
         // You can override it and set your Blinkenlight here.
+        (void)state;
     }
 
     void set(int state) override
