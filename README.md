@@ -61,8 +61,8 @@ void loop()
 }
 ```
 
-> Note: If you don't love the fading effects, just use the `Blinkenlight`-class instead
-> of `Fadinglight`. A `Fadinglight` has smooth fading effects with logarithmic LED
+> Note: If you'd love a smoother look, just use the `Fadinglight`-class instead
+> of `Blinkenlight`. A `Fadinglight` has smooth fading effects with logarithmic LED
 > brightness compensation. Your boards never looked more professional! /s
 
 ## Installation
