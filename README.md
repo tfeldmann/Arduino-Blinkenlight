@@ -43,29 +43,27 @@ Other goodies:
 
 This example blinks the built-in LED on pin 13 in the following pattern:
 
-![pattern](docs/SpeedSettings.png)
+![pattern](https://github.com/tfeldmann/Arduino-Blinkenlight/raw/main/docs/SpeedSettings.png)
 
 ```C
-#include <Fadinglight.h>
+#include <Blinkenlight.h>
 
-Fadinglight led(13);
+Blinkenlight led(13);
 
 void setup()
 {
-    led.pattern(2, 3);  // blink 2x, then 3x
+  led.pattern(2, 3);  // blink 2x, then 3x
 }
 
 void loop()
 {
-    led.update();
+  led.update();
 }
 ```
 
-Easy, uh? It's not only blinking, it does so with smooth fading effects and
-logarithmic LED brightness compensation. Your boards never looked more professional! /s
-
 > Note: If you don't love the fading effects, just use the `Blinkenlight`-class instead
-> of `Fadinglight`.
+> of `Fadinglight`. A `Fadinglight` has smooth fading effects with logarithmic LED
+> brightness compensation. Your boards never looked more professional! /s
 
 ## Installation
 
@@ -81,7 +79,7 @@ pio lib install "tfeldmann/Blinkenlight"
 
 `Blinkenlight` is available in the Arduino library manager.
 
-![Blinkenlight in the Arduino library manager](docs/arduino-library.png)
+![Blinkenlight in the Arduino library manager](https://github.com/tfeldmann/Arduino-Blinkenlight/raw/main/docs/arduino-library.png)
 
 ## Full API
 
@@ -197,7 +195,7 @@ myLed.settings.pause_ms = 2000;
 LED brightness is not linear to the PWM value you set to the pin.
 This library uses a logarithmic dimming curve to create natural looking fading effects.
 
-![logarithmic fading](docs/logarithmic.png)
+![logarithmic fading](https://github.com/tfeldmann/Arduino-Blinkenlight/raw/main/docs/logarithmic.png)
 
 ## I have a status indicator controlled via CAN / I2C / SPI / ... What can I do?
 
